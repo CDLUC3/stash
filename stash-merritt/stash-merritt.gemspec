@@ -30,6 +30,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_dependency 'ezid-client', '~> 1.5'
   spec.add_dependency 'merritt-manifest', '~> 0.1', '>= 0.1.1'
 
+  spec.add_dependency 'stash-harvester'
   spec.add_dependency 'stash-sword'
   spec.add_dependency 'stash-wrapper'
   spec.add_dependency 'stash_datacite'
