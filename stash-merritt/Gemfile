@@ -12,4 +12,3 @@ path '..' do
   gem 'stash_discovery'
   gem 'stash_engine'
 end
-
