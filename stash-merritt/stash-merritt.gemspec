@@ -29,6 +29,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_dependency 'rubyzip', '~> 1.1'
   spec.add_dependency 'ezid-client', '~> 1.5'
   spec.add_dependency 'merritt-manifest', '~> 0.1', '>= 0.1.1'
+  spec.add_dependency 'mysql2', '~> 0.3'
 
   spec.add_dependency 'stash-harvester'
   spec.add_dependency 'stash-sword'
@@ -47,7 +48,6 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_development_dependency 'database_cleaner', '~> 1.5'
   spec.add_development_dependency 'diffy', '~> 3.1'
   spec.add_development_dependency 'equivalent-xml', '~> 0.6.0'
-  spec.add_development_dependency 'mysql2', '~> 0.3'
   spec.add_development_dependency 'webmock', '~> 1.24'
 
 end
