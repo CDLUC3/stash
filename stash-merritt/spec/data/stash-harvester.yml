@@ -1,0 +1,18 @@
+test:
+  source:
+    protocol: OAI
+    oai_base_url: http://uc3-mrtoai-dev.cdlib.org:37001/mrtoai/oai/v2
+    metadata_prefix: stash_wrapper
+    set: dash_cdl
+    seconds_granularity: true
+  mapper:
+    metadata_mapping: datacite_geoblacklight
+  db: none
+  index:
+    db_config_path: config/database.yml
+    adapter: Merritt
+    url: http://uc3-dash2solr-dev.cdlib.org:8983/solr/geoblacklight
+    open_timeout: 120          # connection open timeout in seconds
+    read_timeout: 300          # read timeout in seconds
+    retry_503: 3               # max retries
+    retry_after_limit: 20      # retry wait time in seconds
