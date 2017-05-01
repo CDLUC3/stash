@@ -20,6 +20,7 @@ module Stash
           @proxy = 'http://proxy.example.org'
           @elvis = 'presley'
           @config = MerrittIndexConfig.new(
+            db_config_path: 'config/database.yml',
             url: @url,
             proxy: @proxy,
             elvis: @elvis
@@ -173,11 +174,6 @@ module Stash
           expect(results.map(&:status)).to eq([IndexStatus::FAILED, IndexStatus::COMPLETED, IndexStatus::FAILED, IndexStatus::COMPLETED])
           expect(results.map(&:errors)).to eq([[delete_error], [], [add_error], []])
         end
-
-        it 'returns an overall status based on the solr commit'
-
-        it 'respects the configured batch size'
-
       end
     end
   end

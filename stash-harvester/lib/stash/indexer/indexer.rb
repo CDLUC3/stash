@@ -8,6 +8,7 @@ module Stash
       # @param metadata_mapper [MetadataMapper] the metadata mapper to convert
       #   harvested documents to indexable documents
       def initialize(metadata_mapper:)
+        raise ArgumentError, "metadata_mapper #{metadata_mapper || 'nil'} must implement #to_index_document" unless metadata_mapper && metadata_mapper.respond_to?(:to_index_document)
         @metadata_mapper = metadata_mapper
       end
 
