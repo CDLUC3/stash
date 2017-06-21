@@ -14,4 +14,6 @@ before_install:
 
 script:
   - travis_wait ./travis-build.rb
+  - cd stash_engine && bundle exec rake
+
 
