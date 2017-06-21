@@ -4,7 +4,7 @@ require 'bundler'
 require 'pathname'
 require 'time'
 
-PROJECTS = %w(
+PROJECTS = %w[
   stash-wrapper
   stash-harvester
   stash-sword
@@ -14,20 +14,21 @@ PROJECTS = %w(
   stash_discovery
   stash_datacite
   stash_datacite_specs
-)
+].freeze
 
+# use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
 def exec_command(command, log_file)
-  if /(darwin|bsd)/ =~ RUBY_PLATFORM
-    # use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
-    system("script -q #{log_file} #{command} > /dev/null")
-  else
-    # `script` doesn't work right on Travis for some reason
-    system("#{command} &> #{log_file}")
+  begin
+    if /(darwin|bsd)/ =~ RUBY_PLATFORM
+      `script -q #{log_file} #{command} > /dev/null`
+    else
+      `script -q -c'#{command}' -e #{log_file} > /dev/null"`
+    end
+    return true if $? == 0
+    puts "#{command} failed with status: #{$?}"
+  rescue => e
+    puts "#{command} failed: #{e}"
   end
-
-  status = $?.exitstatus
-  puts "#{command} exited with status #{status}"
-  return true if status == 0
   false
 end
 
@@ -87,7 +88,7 @@ FileUtils.mkdir_p(tmpdir)
 puts "logging build output to #{tmpdir}"
 tmp_path = Pathname.new(tmpdir)
 PROJECTS.each do |p|
-  bundle_out = tmp_path + ("#{p}-bundle.out")
+  bundle_out = tmp_path + "#{p}-bundle.out"
   bundle_ok = bundle(root + p, bundle_out)
   exit(1) unless bundle_ok
 end
@@ -95,7 +96,7 @@ end
 build_succeeded = []
 build_failed = []
 PROJECTS.each do |p|
-  build_out = tmp_path + ("#{p}-build.out")
+  build_out = tmp_path + "#{p}-build.out"
   build_ok = build(root + p, build_out)
   build_succeeded << p if build_ok
   build_failed << p unless build_ok
