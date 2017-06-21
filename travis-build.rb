@@ -16,17 +16,19 @@ PROJECTS = %w(
   stash_datacite_specs
 )
 
-# use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
 def exec_command(command, log_file)
   if /(darwin|bsd)/ =~ RUBY_PLATFORM
+    # use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
     system("script -q #{log_file} #{command} > /dev/null")
   else
-    system("script -q -c'#{command}' -e #{log_file} > /dev/null")
+    # `script` doesn't work right on Travis for some reason
+    system("#{command} &> #{log_file}")
   end
 
   status = $?.exitstatus
-  puts "exit status was: #{status}"
-  (status == 0)
+  return true if status == 0
+  puts "#{command} exited with status #{status}"
+  false
 end
 
 root = Pathname.new(__dir__)
