@@ -18,18 +18,23 @@ PROJECTS = %w[
 
 # use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
 def exec_command(command, log_file)
-  begin
-    if /(darwin|bsd)/ =~ RUBY_PLATFORM
-      `script -q #{log_file} #{command} > /dev/null`
-    else
-      `script -q -c'#{command}' -e #{log_file} > /dev/null`
-    end
-    return true if $? == 0
-    puts "#{command} failed with status: #{$?}"
-  rescue => e
-    puts "#{command} failed: #{e}"
-  end
+  `#{command}`
+  return true if $? == 0
+  puts "#{command} failed with status: #{$?}"
   false
+
+  # begin
+  #   if /(darwin|bsd)/ =~ RUBY_PLATFORM
+  #     `script -q #{log_file} #{command} > /dev/null`
+  #   else
+  #     `script -q -c'#{command}' -e #{log_file} > /dev/null`
+  #   end
+  #   return true if $? == 0
+  #   puts "#{command} failed with status: #{$?}"
+  # rescue => e
+  #   puts "#{command} failed: #{e}"
+  # end
+  # false
 end
 
 root = Pathname.new(__dir__)
