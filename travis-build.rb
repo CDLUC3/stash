@@ -22,7 +22,7 @@ def exec_command(command, log_file)
     if /(darwin|bsd)/ =~ RUBY_PLATFORM
       `script -q #{log_file} #{command} > /dev/null`
     else
-      `script -q -c'#{command}' -e #{log_file} > /dev/null"`
+      `script -q -c'#{command}' -e #{log_file} > /dev/null`
     end
     return true if $? == 0
     puts "#{command} failed with status: #{$?}"
