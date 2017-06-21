@@ -26,8 +26,8 @@ def exec_command(command, log_file)
   end
 
   status = $?.exitstatus
-  return true if status == 0
   puts "#{command} exited with status #{status}"
+  return true if status == 0
   false
 end
 
