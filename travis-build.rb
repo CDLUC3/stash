@@ -4,6 +4,9 @@ require 'bundler'
 require 'pathname'
 require 'time'
 
+# ########################################
+# Constants
+
 PROJECTS = %w[
   stash-wrapper
   stash-harvester
@@ -16,102 +19,105 @@ PROJECTS = %w[
   stash_datacite_specs
 ].freeze
 
-# use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
-def exec_command(command, log_file)
-  `#{command} > #{log_file}`
-  return true if $? == 0
-  puts "#{command} failed with status: #{$?}"
-  false
+STASH_ROOT = Pathname.new(__dir__)
 
-  # begin
-  #   if /(darwin|bsd)/ =~ RUBY_PLATFORM
-  #     `script -q #{log_file} #{command} > /dev/null`
-  #   else
-  #     `script -q -c'#{command}' -e #{log_file} > /dev/null`
-  #   end
-  #   return true if $? == 0
-  #   puts "#{command} failed with status: #{$?}"
-  # rescue => e
-  #   puts "#{command} failed: #{e}"
-  # end
-  # false
+TRAVIS_PREP_SH = 'travis-prep.sh'.freeze
+
+# ########################################
+# Helper methods
+
+def travis_fold(group, &block)
+  puts "travis_fold:start:#{group}"
+  yield
+ensure
+  puts "travis_fold:end:#{group}"
 end
 
-root = Pathname.new(__dir__)
+def dir_for(project)
+  STASH_ROOT + project
+end
 
-def bundle(project_dir, bundle_out)
-  puts "bundling #{project_dir}"
-  Dir.chdir(project_dir) do
-    Bundler.with_clean_env do
-      bundle_ok = exec_command('bundle install', bundle_out)
-      $stderr.puts("bundle failed: #{project_dir}") unless bundle_ok
-      system("cat #{bundle_out}") unless bundle_ok
-      return bundle_ok
-    end
+def in_project(project, &block)
+  Dir.chdir(dir_for(project)) { yield }
+end
+
+# ########################################
+# Build steps
+
+def run_bundle_install
+  Bundler.with_clean_env { return system('bundle install') }
+end
+
+def bundle(project)
+  travis_fold("bundle-#{project}") do
+    in_project(project) { return run_bundle_install }
   end
+rescue => e
+  $stderr.puts(e)
+  return false
 end
 
-def prepare(project_dir, prep_out)
-  prep_script = project_dir + 'travis-prep.sh'
-  return true unless prep_script.exist?
-
-  puts "preparing: #{prep_script}"
-  unless FileTest.executable?(prep_script.to_s)
-    $stderr.puts("prepare failed: #{prep_script} is not executable")
-    return false
-  end
-
-  prep_ok = exec_command(prep_script, prep_out)
-  $stderr.puts("prepare failed: #{prep_script}") unless prep_ok
-  system("cat #{prep_out}") unless prep_ok
-  prep_ok
-end
-
-def build(project_dir, build_out)
-  Dir.chdir(project_dir) do
-    begin
-      prep_out = build_out.sub('-build', '-prep')
-      prep_ok = prepare(project_dir, prep_out)
-      return false unless prep_ok
-
-      puts "building #{project_dir}"
-      Bundler.with_clean_env do
-        build_ok = exec_command('bundle exec rake', build_out)
-        $stderr.puts("build failed: #{project_dir}") unless build_ok
-        system("cat #{build_out}") unless build_ok
-        return build_ok
-      end
-    rescue => e
-      $stderr.puts(e)
+def run_travis_prep_if_present
+  return true unless File.exists?(TRAVIS_PREP_SH)
+  travis_fold("prepare-#{project}") do
+    unless FileTest.executable?(TRAVIS_PREP_SH)
+      $stderr.puts("prepare failed: #{File.absolute_path(TRAVIS_PREP_SH)} is not executable")
       return false
     end
+    system(TRAVIS_PREP_SH, err: :out)
   end
 end
 
-tmpdir = File.absolute_path("builds/#{Time.now.utc.iso8601}")
-FileUtils.mkdir_p(tmpdir)
-puts "logging build output to #{tmpdir}"
-tmp_path = Pathname.new(tmpdir)
-PROJECTS.each do |p|
-  bundle_out = tmp_path + "#{p}-bundle.out"
-  bundle_ok = bundle(root + p, bundle_out)
-  exit(1) unless bundle_ok
+def prepare(project)
+  in_project(project) { return run_travis_prep_if_present }
+rescue => e
+  $stderr.puts(e)
+  return false
 end
 
-build_succeeded = []
-build_failed = []
-PROJECTS.each do |p|
-  build_out = tmp_path + "#{p}-build.out"
-  build_ok = build(root + p, build_out)
-  build_succeeded << p if build_ok
-  build_failed << p unless build_ok
+def run_rake
+  system('bundle exec rake')
 end
 
-unless build_succeeded.empty?
-  $stderr.puts("The following projects built successfully: #{build_succeeded.join(', ')}")
+def build(project)
+  travis_fold("build-#{project}") do
+    in_project(project) { return run_rake }
+  end
+rescue => e
+  $stderr.puts(e)
+  return false
 end
 
-unless build_failed.empty?
-  $stderr.puts("The following projects failed to build: #{build_failed.join(', ')}")
-  exit(1)
+def bundle_all
+  PROJECTS.each do |p|
+    bundle_ok = bundle(p)
+    $stderr.puts("#{p} bundle failed") unless bundle_ok
+    exit(1) unless bundle_ok
+  end
+  true
 end
+
+def build_all
+  build_succeeded = []
+  build_failed = []
+  PROJECTS.each do |p|
+    build_ok = build(p)
+    build_succeeded << p if build_ok
+    build_failed << p unless build_ok
+    $stderr.puts("#{p} build failed") unless build_ok
+  end
+
+  unless build_succeeded.empty?
+    $stderr.puts("The following projects built successfully: #{build_succeeded.join(', ')}")
+  end
+  unless build_failed.empty?
+    $stderr.puts("The following projects failed to build: #{build_failed.join(', ')}")
+    exit(1)
+  end
+end
+
+# ########################################
+# Build commands
+
+bundle_all
+build_all
