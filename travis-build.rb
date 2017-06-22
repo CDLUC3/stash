@@ -18,7 +18,7 @@ PROJECTS = %w[
 
 # use `script` to preserve ANSI colors, see https://stackoverflow.com/a/27399198/27358
 def exec_command(command, log_file)
-  `#{command}`
+  `#{command} > #{log_file}`
   return true if $? == 0
   puts "#{command} failed with status: #{$?}"
   false
