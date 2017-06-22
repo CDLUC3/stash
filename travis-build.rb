@@ -58,18 +58,20 @@ rescue => e
 end
 
 def run_travis_prep_if_present
-  return true unless File.exists?(TRAVIS_PREP_SH)
-  travis_fold("prepare-#{project}") do
-    unless FileTest.executable?(TRAVIS_PREP_SH)
-      $stderr.puts("prepare failed: #{File.absolute_path(TRAVIS_PREP_SH)} is not executable")
-      return false
-    end
-    system(TRAVIS_PREP_SH, err: :out)
+  travis_prep_sh = "./#{TRAVIS_PREP_SH}"
+  puts("No prep script #{File.absolute_path(travis_prep_sh)}") unless travis_prep_sh
+  return true unless File.exists?(travis_prep_sh)
+  unless FileTest.executable?(travis_prep_sh)
+    $stderr.puts("prepare failed: #{File.absolute_path(travis_prep_sh)} is not executable")
+    return false
   end
+  system(travis_prep_sh, err: :out)
 end
 
 def prepare(project)
-  in_project(project) { return run_travis_prep_if_present }
+  travis_fold("prepare-#{project}") do
+    in_project(project) { return run_travis_prep_if_present }
+  end
 rescue => e
   $stderr.puts(e)
   return false
@@ -101,15 +103,19 @@ def build_all
   build_succeeded = []
   build_failed = []
   PROJECTS.each do |p|
+    prep_ok = prepare(p)
+    $stderr.puts("#{p} prep failed") unless prep_ok
+    next unless prep_ok
+
     build_ok = build(p)
-    build_succeeded << p if build_ok
-    build_failed << p unless build_ok
+    build_ok ? (build_succeeded << p) : (build_failed << p)
     $stderr.puts("#{p} build failed") unless build_ok
   end
 
   unless build_succeeded.empty?
     $stderr.puts("The following projects built successfully: #{build_succeeded.join(', ')}")
   end
+
   unless build_failed.empty?
     $stderr.puts("The following projects failed to build: #{build_failed.join(', ')}")
     exit(1)
