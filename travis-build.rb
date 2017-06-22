@@ -19,21 +19,31 @@ PROJECTS = %w[
   stash_datacite_specs
 ].freeze
 
-STASH_ROOT = Pathname.new(__dir__)
+STASH_ROOT = Pathname.new(__dir__).realpath
 
 TRAVIS_PREP_SH = 'travis-prep.sh'.freeze
 
 IN_TRAVIS = ENV['TRAVIS'] == 'true' ? true : false
 
 # ########################################
+# Accessors
+
+def successful_builds
+  @successful_builds ||= []
+end
+
+def failed_builds
+  @failed_builds ||= []
+end
+
+# ########################################
 # Helper methods
 
 def tmp_path
   @tmp_path ||= begin
-    tmpdir = File.absolute_path("builds/#{Time.now.utc.iso8601}")
-    FileUtils.mkdir_p(tmpdir)
-    puts "logging build output to #{tmpdir}"
-    Pathname.new(tmpdir)
+    tmp_path = STASH_ROOT + 'builds' + Time.now.utc.iso8601
+    tmp_path.mkpath
+    tmp_path
   end
 end
 
@@ -57,12 +67,16 @@ ensure
   puts "travis_fold:end:#{task_name}"
 end
 
+def script_command(shell_command, log_file)
+  return "script -q #{log_file} #{shell_command} > /dev/null" if /(darwin|bsd)/ =~ RUBY_PLATFORM
+  "script -q -c'#{shell_command}' -e #{log_file} > /dev/null"
+end
+
 def redirect_to(shell_command, log_file)
-  if /(darwin|bsd)/ =~ RUBY_PLATFORM
-    system("script -q #{log_file} #{shell_command} > /dev/null")
-  else
-    system("script -q -c'#{shell_command}' -e #{log_file} > /dev/null")
-  end
+  script_command = script_command(shell_command, log_file)
+  working_path = Pathname.getwd.relative_path_from(STASH_ROOT)
+  puts "#{working_path}: #{shell_command} > #{log_file}"
+  system(script_command)
 rescue => ex
   $stderr.puts("#{shell_command} failed: #{ex}")
   false
@@ -93,12 +107,7 @@ end
 def prepare(project)
   in_project(project) do
     travis_prep_sh = "./#{TRAVIS_PREP_SH}"
-    puts("No prep script #{File.absolute_path(travis_prep_sh)}") unless travis_prep_sh
     return true unless File.exist?(travis_prep_sh)
-    unless FileTest.executable?(travis_prep_sh)
-      $stderr.puts("prepare failed: #{File.absolute_path(travis_prep_sh)} is not executable")
-      return false
-    end
     run_task("prepare-#{project}", travis_prep_sh)
   end
 rescue => e
@@ -125,32 +134,24 @@ def bundle_all
 end
 
 def build_all
-  build_succeeded = []
-  build_failed = []
   PROJECTS.each do |p|
     prep_ok = prepare(p)
     $stderr.puts("#{p} prep failed") unless prep_ok
     next unless prep_ok
 
     build_ok = build(p)
-    build_ok ? (build_succeeded << p) : (build_failed << p)
+    (build_ok ? successful_builds : failed_builds) << p
     $stderr.puts("#{p} build failed") unless build_ok
-  end
-
-  unless build_succeeded.empty?
-    $stderr.puts("The following projects built successfully: #{build_succeeded.join(', ')}")
-  end
-
-  unless build_failed.empty?
-    $stderr.puts("The following projects failed to build: #{build_failed.join(', ')}")
-    exit(1)
   end
 end
 
 # ########################################
 # Build commands
 
-puts IN_TRAVIS
+bundle_all
 
-# bundle_all
-# build_all
+build_all
+
+$stderr.puts("The following projects built successfully: #{successful_builds.join(', ')}") unless successful_builds.empty?
+exit(0) if failed_builds.empty?
+$stderr.puts("The following projects failed to build: #{failed_builds.join(', ')}")
