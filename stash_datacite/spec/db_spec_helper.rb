@@ -63,9 +63,11 @@ end
 
 # TODO: cleanly separate test-safe and test-unsafe initializers
 stash_engine_path = ENGINES['stash_engine']
-%w(hash_to_ostruct inflections).each do |initializer|
+%w[hash_to_ostruct inflections].each do |initializer|
   require "#{stash_engine_path}/config/initializers/#{initializer}.rb"
 end
+
+LICENSES = YAML.load_file(File.expand_path('../config/licenses.yml', __FILE__)).with_indifferent_access
 
 # TODO: stop needing to do this
 module StashDatacite
@@ -76,4 +78,3 @@ end
 stash_datacite_path = ENGINES['stash_datacite']
 require "#{stash_datacite_path}/config/initializers/patches.rb"
 StashDatacite::ResourcePatch.associate_with_resource(StashEngine::Resource)
-

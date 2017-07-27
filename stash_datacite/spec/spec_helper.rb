@@ -22,10 +22,10 @@ require 'stash_engine'
 require 'stash_datacite'
 
 class ApplicationController < ActionController::Base
-  # hack to get around the fact we're not running in an app
+  # HACK: to get around the fact we're not running in an app
 end
 
-ENGINES = %w(stash_engine stash_datacite stash_discovery).map do |engine_name|
+ENGINES = %w[stash_engine stash_datacite stash_discovery].map do |engine_name|
   engine_path = Gem::Specification.find_by_name(engine_name).gem_dir
   [engine_name, engine_path]
 end.to_h
