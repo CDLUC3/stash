@@ -25,9 +25,18 @@ class ApplicationController < ActionController::Base
   # hack to get around the fact we're not running in an app
 end
 
-%w(stash_engine stash_datacite stash_discovery).map do |engine_name|
+ENGINES = %w(stash_engine stash_datacite stash_discovery).map do |engine_name|
   engine_path = Gem::Specification.find_by_name(engine_name).gem_dir
+  [engine_name, engine_path]
+end.to_h
+
+ENGINES.each do |engine_name, engine_path|
   models_path = "#{engine_path}/app/models/#{engine_name}"
   $LOAD_PATH.unshift(models_path) if File.directory?(models_path)
   Dir.glob("#{models_path}/**/*.rb").sort.each(&method(:require))
 end
+
+# ------------------------------------------------------------
+# Misc. utils
+
+Dir.glob(File.expand_path('../util/*.rb', __FILE__)).sort.each(&method(:require))
