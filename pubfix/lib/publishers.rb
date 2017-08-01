@@ -63,7 +63,10 @@ module Publishers
     }.freeze
   }.freeze
 
-  TO_FIX = {
+  CURRENT = TENANTS.values.map { |properties| properties[:short_name] }.to_set.freeze
+
+  DB_TO_FIX = {
+    'IFCA' => :dataone,
     'UCLA' => :ucla,
     'University of California-Davis' => :ucd,
     'University of California, Berkeley' => :ucb,
