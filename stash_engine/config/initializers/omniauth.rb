@@ -24,18 +24,28 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       :path_prefix    => '/stash/auth'
 
   provider :orcid, StashEngine.app.orcid_key, StashEngine.app.orcid_secret,
-       :member => StashEngine.app.member,
-       :sandbox => StashEngine.app.sandbox,
-       :callback_path  => '/stash/auth/orcid/callback',
-       :path_prefix    => '/stash/auth',
-           :authorize_params => {
-               :scope => '/authenticate'
-           },
-           :client_options => {
-              :site => StashEngine.app.orcid_site,
-              :authorize_url => StashEngine.app.orcid_authorize_url,
-              :token_url => StashEngine.app.orcid_token_url
-           }
+    :member => StashEngine.app.member,
+    :sandbox => StashEngine.app.sandbox,
+    # I can't get anything to actually modify the redirect path except callback_path
+    # :request_path => '/snacky/auth/orcid/callback',
+    # :callback_path => '/stash/auth/orcid/callback',
+    # :request_path => 'a path',
+    # :callback_url  => "#{request.base_url}/stash/auth/orcid/callback",
+    # :callback_url => 'https://snackface.com/stash/auth/orcid/callback',
+    # :callback_url => lambda { |env|
+    #  byebug
+    #},
+    # :path_prefix    => '/stash/auth/orcid',
+    :authorize_options => {
+      #:redirect_uri => 'https://snackface.com/stash/auth/orcid/callback',
+      :scope => '/authenticate'
+    }
+    # I think all of these are unused and are leftover garbage
+    #:client_options => {
+    #   :site => StashEngine.app.orcid_site,
+    #   :authorize_url => StashEngine.app.orcid_authorize_url,
+    #   :token_url => StashEngine.app.orcid_token_url
+    #}
   ## Omniauth on_failure behavior to work for all ENV including localhost
   OmniAuth.config.on_failure = -> (env) do
     Rack::Response.new(['302 Moved'], 302, 'Location' => env['omniauth.origin'] || "/").finish
