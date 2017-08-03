@@ -1,7 +1,6 @@
 SELECT DISTINCT
   r.id         AS resource_id,
-  i.identifier AS doi_value,
-  p.publisher  AS bad_publisher,
+  p.publisher  AS db_publisher,
   u.first_name AS user_first_name,
   u.last_name  AS user_last_name,
   u.email      AS user_email,
@@ -13,24 +12,9 @@ FROM
   stash_engine_resource_states s,
   dcs_publishers p
 WHERE
+  i.identifier = ? AND
   r.identifier_id = i.id AND
   r.current_resource_state_id = s.id AND
   r.user_id = u.id AND
   s.resource_state = 'submitted' AND
-  p.resource_id = r.id AND
-  p.publisher NOT IN (
-    'DataONE',
-    'LBNL',
-    'UC Berkeley',
-    'UC Davis',
-    'UC Irvine',
-    'UC Los Angeles',
-    'UC Merced',
-    'UC Office of the President',
-    'UC Riverside',
-    'UC Santa Barbara',
-    'UC Santa Cruz',
-    'UC San Francisco'
-  )
-ORDER BY
-  bad_publisher, resource_id
+  p.resource_id = r.id

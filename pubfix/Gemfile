@@ -8,3 +8,4 @@ end
 
 gem 'mysql2', '~> 0.3'
 gem 'rsolr', '~> 1.1'
+gem 'rubocop', '~> 0.49'

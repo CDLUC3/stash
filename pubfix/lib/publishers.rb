@@ -1,3 +1,5 @@
+require 'set'
+
 module Publishers
 
   TENANTS = {
@@ -65,7 +67,7 @@ module Publishers
 
   CURRENT = TENANTS.values.map { |properties| properties[:short_name] }.to_set.freeze
 
-  DB_TO_FIX = {
+  BAD_PUBLISHER_TENANT_IDS = {
     'IFCA' => :dataone,
     'UCLA' => :ucla,
     'University of California-Davis' => :ucd,
@@ -73,8 +75,20 @@ module Publishers
     'University of California, Los Angeles' => :ucla,
     'University of California, Office of the President' => :ucop,
     'University of California, San Francisco' => :ucsf,
-    'University of California, Santa Cruz' => :ucsc,
-    'California Digital Library' => :ucop
-  }
+    'University of California, Santa Cruz' => :ucsc
+  }.freeze
 
+  def self.is_current(publisher)
+    return CURRENT.include?(publisher)
+  end
+
+  def self.good_publisher_for(bad_publisher)
+    tenant_id = BAD_PUBLISHER_TENANT_IDS[bad_publisher]
+    return unless tenant_id
+
+    tenant = TENANTS[tenant_id]
+    return unless tenant
+
+    tenant[:short_name]
+  end
 end
