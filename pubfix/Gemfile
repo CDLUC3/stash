@@ -6,6 +6,6 @@ path '..' do
   gem 'stash_engine'
 end
 
-gem 'mysql2', '~> 0.3'
+gem 'mysql2', '~> 0.4'
 gem 'rsolr', '~> 1.1'
 gem 'rubocop', '~> 0.49'
