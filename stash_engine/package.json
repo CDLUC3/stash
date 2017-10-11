@@ -33,5 +33,7 @@
     "postcss-assets": "",
     "run-sequence": ""
   },
-  "dependencies": {}
+  "dependencies": {
+    "substance": ""
+  }
 }
