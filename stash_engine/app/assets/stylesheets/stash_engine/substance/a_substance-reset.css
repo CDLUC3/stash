@@ -1,0 +1,83 @@
+/* Reset adapted from http://meyerweb.com/eric/tools/css/reset/
+------------------------------------------------------- */
+
+.sc_overlay html, .sc_overlay body, .sc_overlay div, .sc_overlay span, .sc_overlay applet, .sc_overlay object, .sc_overlay iframe,
+.sc_overlay h1, .sc_overlay h2, .sc_overlay h3, .sc_overlay h4, .sc_overlay h5, .sc_overlay h6, .sc_overlay p, .sc_overlay blockquote, .sc_overlay pre,
+.sc_overlay a, .sc_overlay abbr, .sc_overlay acronym, .sc_overlay address, .sc_overlay big, .sc_overlay cite, .sc_overlay code,
+.sc_overlay del, .sc_overlay dfn, .sc_overlay em, .sc_overlay img, .sc_overlay ins, .sc_overlay kbd, .sc_overlay q, .sc_overlay s, .sc_overlay samp,
+.sc_overlay small, .sc_overlay strike, .sc_overlay strong, .sc_overlay sub, .sc_overlay sup, .sc_overlay tt, .sc_overlay var,
+.sc_overlay b, .sc_overlay u, .sc_overlay i, .sc_overlay center,
+.sc_overlay dl, .sc_overlay dt, .sc_overlay dd, /*ol, ul, li,*/
+.sc_overlay fieldset, .sc_overlay form, .sc_overlay label, .sc_overlay legend,
+.sc_overlay table, .sc_overlay caption, .sc_overlay tbody, .sc_overlay tfoot, .sc_overlay thead, .sc_overlay tr, .sc_overlay th, .sc_overlay td,
+.sc_overlay article, .sc_overlay aside, .sc_overlay canvas, .sc_overlay details, .sc_overlay embed,
+.sc_overlay figure, .sc_overlay figcaption, .sc_overlay footer, .sc_overlay header, .sc_overlay hgroup,
+.sc_overlay menu, .sc_overlay nav, .sc_overlay output, .sc_overlay ruby, .sc_overlay section, .sc_overlay summary,
+.sc_overlay time, .sc_overlay mark, .sc_overlay audio, .sc_overlay video {
+  margin:0;
+  padding:0;
+  border:0;
+  font-size:100%;
+  font:inherit;
+  vertical-align:baseline;
+  }
+
+/* HTML5 display-role reset for older browsers */
+
+.sc_overlay article, .sc_overlay aside, .sc_overlay details, .sc_overlay figcaption, .sc_overlay figure,
+.sc_overlay footer, .sc_overlay header, .sc_overlay hgroup, .sc_overlay menu, .sc_overlay nav, .sc_overlay section {
+  display:block;
+}
+
+.sc_overlay body { line-height:1; }
+
+.sc_overlay ol, .sc_overlay ul { /*list-style:none;*/ margin: 0; }
+
+.sc_overlay blockquote, .sc_overlay q { quotes:none; }
+
+.sc_overlay blockquote:before, .sc_overlay blockquote:after,
+.sc_overlay q:before, .sc_overlay q:after { content:none; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+
+.sc_overlay table { border-collapse: collapse; border-spacing:0; }
+
+/* remember to define focus styles. */
+
+.sc_overlay :focus { outline:0; }
+
+.sc_overlay *, .sc_overlay *:after, .sc_overlay *:before {
+  -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+          box-sizing:border-box;
+}
+
+/* Reset `button` and button-style `input` default styles */
+
+.sc_overlay input[type="submit"],
+.sc_overlay input[type="reset"],
+.sc_overlay input[type="button"],
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    display: block;
+    text-align: left;
+    -webkit-appearance: button; /* for input */
+    -webkit-user-select: none; /* for button */
+       -moz-user-select: none;
+        -ms-user-select: none;
+}
+
+.sc_overlay input::-moz-focus-inner,
+.sc_overlay button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/*# sourceMappingURL=substance-reset.css.map */

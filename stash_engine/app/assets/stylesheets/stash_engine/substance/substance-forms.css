@@ -1,0 +1,882 @@
+/* All Substance core package styles */
+/*
+  Provides all component styles. Does not provide any page styles,
+  such as fonts and colors for links etc.
+*/
+/* Global variables
+-------------------------------------------------- */
+:root {
+    /* Layout */
+
+    /* Normalized heights (used by buttons and inputs) */
+
+    /* Colors */
+
+    /* Used by Button component */ /* #f8f8f8; */
+
+    /* Depending on a base-color */
+
+    /* We disable this for now, as accessibility needs more discussion */ /* #1795CD;/* #5BE3FF;
+
+  /* Font colors */
+
+    /* Default padding */
+
+    /* Prose font sizes */
+    /* Title font sizes */
+    /* Heading font sizes */
+
+    /* code-font */
+
+    /* RGB #A3CDFD = HSB 209,29,80 */
+
+    /* Collaborator colors */
+}
+
+/* resets brought across from the reset css because it fails without them */
+
+
+/* switch-text-type */
+/* Switch Text Type Component
+---------------------------- */
+.sc-switch-text-type {
+    overflow: visible;
+    position: relative;
+    width: 120px;
+    /*font-size: var(--small-font-size);*/
+    /*
+      When using --small-font-size = 13px we get a wrong
+      offset in the toolbar. Needs checking.
+    */
+    font-size: 12px;
+    font-weight: 600;
+}
+.sc-switch-text-type .se-toggle {
+    background: white;
+    height: 30px;
+    padding: 0px 10px;
+    display: block;
+    overflow: hidden;
+}
+.sc-switch-text-type:not(.sm-disabled) .se-toggle:after {
+    content: " \f0d7";
+    padding-left: 10px;
+    margin-top: 2px;
+    float: right;
+    font-family: FontAwesome;
+}
+.sc-switch-text-type.sm-disabled { opacity: 0.4; cursor: default; }
+.sc-switch-text-type.sm-disabled:hover { background: none; }
+.sc-switch-text-type .se-options {
+    display: none;
+    position: absolute;
+    background: white;
+    top: 40px;
+    z-index: 5000;
+    min-width: 150px;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+    border: 1px solid #E0E4E4;
+}
+.sc-switch-text-type .se-options .se-option {
+    display: block;
+    padding: 5px 10px;
+    width: 100%; /* needed to make buttons render like block elements */
+}
+.sc-switch-text-type .se-options .se-option:hover,
+.sc-switch-text-type .se-options .se-option:focus {
+    background: rgba(0,0,0,0.05);
+}
+.sc-switch-text-type.sm-open .se-options { display: block; }
+/* blockquote */
+.sc-blockquote {
+    border-left: 2px solid #E0E4E4;
+    padding-left: 30px;
+}
+.sc-switch-text-type .se-option.sm-blockquote {
+    border-left: 2px solid #E0E4E4;
+}
+/* blocker */
+.sc-blocker {
+    z-index: 500000;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    background: #FFF;
+
+    opacity: 0;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+}
+.sc-blocker > .se-display {
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+}
+.sc-blocker.sm-visible {
+    opacity: 0.7;
+}
+.sc-blocker.sm-visible > .se-display {
+    opacity: 1.0;
+}
+/* button */
+/*
+  Outline style
+  =============================================================
+
+  Used for tools in regular white Toolbar
+*/
+.sc-button.sm-style-outline {
+    position: relative;
+    height: 30px;
+    min-width: 30px;
+    line-height: 30px;
+    text-align: center;
+    /*
+      TODO: if we put var(--small-font-size) here = 13px we get different
+      alignments for buttons with vs buttons without labels.
+    */
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 15px;
+    border: 1px solid #E0E4E4;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+.sc-button.sm-style-outline[disabled=true] {
+    opacity: 0.4;
+    cursor: default;
+}
+.sc-button.sm-style-outline > .se-label {
+    font-weight: 600;
+    display: inline-block;
+    padding: 0px 5px;
+}
+/* Add spacing between icon and label */
+.sc-button.sm-style-outline > * + * {
+    padding-left: 5px;
+}
+.sc-button.sm-style-outline.sm-active {
+    border-color: #2E2E2E;
+    background: #2E2E2E;
+    color: rgba(255,255,255, 1);
+}
+.sc-button.sm-style-outline:focus {
+    background: #E0E4E4;
+}
+.sc-button.sm-style-outline.sm-active:focus {
+    border-color: #444;
+    background: #444;
+}
+/*
+  Plain Dark Style
+  =============================================================
+
+  Used in Overlay
+*/
+.sc-button.sm-style-plain-dark {
+    position: relative;
+    height: 30px;
+    min-width: 30px;
+    line-height: 30px;
+    text-align: center;
+    /*
+      TODO: if we put var(--small-font-size) here = 13px we get different
+      alignments for buttons with vs buttons without labels.
+    */
+    font-size: 12px;
+    font-weight: 600;
+    padding-left: 7px;
+    padding-right: 7px;
+    color: rgba(255, 255, 255, 0.4);
+}
+.sc-button.sm-style-plain-dark > .se-label {
+    font-weight: 600;
+    display: inline-block;
+    padding: 0px 5px;
+}
+/* Add spacing between icon and label */
+.sc-button.sm-style-plain-dark > * + * {
+    padding-left: 5px;
+}
+.sc-button.sm-style-plain-dark.sm-active {
+    color: rgba(255,255,255,1);
+}
+.sc-button.sm-style-plain-dark:focus {
+    color: rgba(255,255,255, 0.75);
+}
+/*
+  Some tools add a mode icon, which we position here
+*/
+.sc-button > .se-mode {
+    /* we hide the mode indicator for now - too much visual noise */
+    display: none;
+}
+/* code */
+.sc-code {
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 14px;
+    background: rgba(0,0,0,0.05);
+    padding: 2px 0px;
+}
+/* codeblock */
+.sc-codeblock {
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 15px;
+}
+// Toolbar styles
+   .sc-switch-text-type .se-option.sm-codeblock {
+       font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+       font-size: 15px;
+   }
+/* context-menu */
+.sc-context-menu {
+    position: absolute;
+    background: #2E2E2C;
+    border-radius: 5px;
+    font-size: 13px;
+    z-index: 1000;
+}
+.sc-context-menu.sm-hidden {
+    /* we don't use display none because we want to determine the content's width */
+    visibility: hidden;
+    left: 0px;
+    top: 0px;
+}
+.sc-context-menu > .sc-tool-group {
+    min-width: 120px;
+    padding: 5px 0;
+}
+.sc-context-menu > .sc-tool-group:not(:last-child) {
+    border-bottom: 1px solid #111;
+}
+/* dropzones */
+.sc-dropzones {
+}
+.sc-dropzones .se-dropzone {
+    position: absolute;
+}
+.sc-dropzones .se-dropzone .se-drop-teaser {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    z-index: 100;
+    transition: background-color 0.5s ease;
+    height: 3px;
+}
+.sc-dropzones .se-dropzone.sm-over .se-drop-teaser {
+    background: #2A8CFF;
+}
+.sc-dropzones .se-dropzone .se-drop-shield {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index:101;
+}
+.sc-dropzones.sm-hidden {
+    visibility: hidden;
+    left: 0px;
+    top: 0px;
+}
+/* Custom Dropzone styles */
+.sc-dropzones .se-custom-dropzone {
+    z-index: 102;
+}
+.sc-dropzones .se-custom-dropzone .se-drop-shield {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index:103;
+}
+.sc-dropzones .se-custom-dropzone.sm-over {
+    background: rgba(0,0,0,0.7);
+    color: #fff
+}
+.sc-dropzones .se-custom-dropzone .se-message {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 20px 0;
+    display: none;
+}
+.sc-dropzones .se-custom-dropzone.sm-over .se-message {
+    display: block;
+}
+/* emphasis */
+.sc-emphasis {
+    font-style: italic;
+}
+/* heading */
+.sc-heading {
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+.sc-heading.sm-level-1 {
+    font-size: 26px;
+}
+.sc-heading.sm-level-2 {
+    font-size: 22px;
+}
+.sc-heading.sm-level-3 {
+    font-size: 18px;
+}
+.sc-heading.sm-level-4 {
+    font-size: 16px;
+}
+/* Overrides for SwitchTextType tool */
+.sc-switch-text-type .se-option.sm-heading1 {
+    font-size:  26px;
+    font-weight:  600;
+}
+.sc-switch-text-type .se-option.sm-heading2 {
+    font-size: 22px;
+    font-weight: 600;
+}
+.sc-switch-text-type .se-option.sm-heading3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+.sc-switch-text-type .se-option.sm-heading4 {
+    font-size: 16px;
+    font-weight: 600;
+}
+/* inline-wrapper */
+.sc-inline-wrapper { display: block; margin-top: 10px; }
+.sc-inline-wrapper > .se-container { display: block; }
+.sc-inline-wrapper.sm-default-style.sm-selected > .se-container {
+    background: rgba(163,205,253, 0.6);
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+.sc-inline-wrapper.sm-default-style.sm-co-selected > .se-container {
+    background: rgba(163,205,253, 0.6);
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+.sc-inline-wrapper.sm-default-style.sm-focused > .se-container {
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+.sc-inline-wrapper.sm-default-style.sm-co-focused > .se-container {
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+/* paragraph */
+.sc-paragraph {}
+/* prose-editor */
+.sc-prose-editor {}
+.sc-prose-editor .sc-container-editor {
+    padding:  20px;
+    margin: 0 auto;
+    max-width: 800px;
+}
+/* Add padding to each child except last one */
+.sc-prose-editor .sc-container-editor > * {
+    margin: 10px 0;
+}
+.sc-prose-editor .se-toolbar-wrapper {
+    border-bottom: 1px solid  #E0E4E4;
+}
+.sc-prose-editor .se-toolbar-wrapper .sc-toolbar {
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* strong */
+.sc-strong {
+    font-weight: bold;
+}
+/* link */
+.sc-link {
+    color: #2079DC;
+}
+.sc-edit-link-tool > * {
+    display: inline-block;
+    margin-right: 5px;
+}
+/* image */
+.sc-image {
+    position: relative;
+    max-width: 100%;
+    display: block;
+    margin: 0px auto;
+}
+.sc-image img {
+    display: block;
+    max-width: 100%;
+    margin: 0px auto;
+}
+.sc-insert-image-tool > input {
+    display: none;
+}
+/* subscript */
+.sc-subscript {
+    vertical-align: sub;
+    font-size: smaller;
+}
+/* superscript */
+.sc-superscript {
+    vertical-align: super;
+    font-size: smaller;
+}
+.sc-tool-dropdown { display: inline-block; position: relative; }
+.sc-tool-dropdown > .sc-button {
+    margin: 5px 2px;
+}
+.sc-tool-dropdown > .se-options {
+    position: absolute;
+    z-index: 10000;
+    top: 40px;
+    left: -80px;
+    width: 200px;
+}
+.sc-tool-dropdown > .se-options > .se-arrow {
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4px 8px 4px;
+    border-color: transparent transparent #2E2E2C transparent;
+}
+.sc-tool-dropdown > .se-options > .se-content {
+    background: #2E2E2E;
+    border-radius: 5px;
+}
+.sc-tool-group.sm-layout-horizontal {
+    display: inline-block;
+    padding-left: 5px;
+}
+.sc-tool-group.sm-layout-horizontal > * {
+    display: inline-block;
+    position: relative;
+    margin: 5px 2px;
+}
+/* scroll-pane */
+/* ScrollPane
+-----------------------------------------------------*/
+.sc-scroll-pane.sm-default-style {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+/* Substance scrollbar active */
+/* Make space for Substance Scrollbar on the left side */
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar.sm-scrollbar-position-left .se-scrollable {
+    left: 20px;
+}
+/* Patches the scrollbar to stick on the right side */
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar.sm-scrollbar-position-right .sc-scrollbar {
+    right: 0px; left: auto;
+}
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar.sm-scrollbar-position-right .se-scrollable {
+    right: 20px;
+}
+/* Hide native scroll bar in content panel */
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar .se-scrollable::-webkit-scrollbar {
+    width: 0px; height: 0px;
+}
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar .se-scrollable::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0);
+}
+/* Hide native scrollbar in Internet Explorer/Edge */
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar .se-scrollable {
+    -ms-overflow-style: none;
+}
+/* Firefox-specific hack for hiding the scrollbar */
+.sc-scroll-pane.sm-default-style.sm-substance-scrollbar.sm-firefox .se-scrollable {
+    margin-right: -15px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+/* Patches the scrollbar to stick on the right side */
+.sc-scroll-pane.sm-default-style > .se-scrollable {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: auto;
+}
+.sc-scroll-pane.sm-default-style > .se-scrollable > .se-content { position: relative; }
+/* For debugging purposes
+.sc-scroll-pane .se-scanline {
+  position: absolute;
+  display: none;
+  top: 50px;
+  left: 40px;
+  width: 10px;
+  height: 2px;
+  background: #ccc;
+} */
+/* split-pane */
+.sc-split-pane {
+    display: flex;
+    flex-flow: row nowrap;
+    /* Serves as anchor for absolute positioning for child components */
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+.sc-split-pane.sm-horizontal { flex-flow: column nowrap; }
+.sc-split-pane > .se-pane { position: relative; }
+/* This should be fixed according to the configured size (set directly
+on the element). Size can either be a percentage or px value.
+Don't grow, don't shrink, use width or height for size determination */
+.sc-split-pane > .se-pane.sm-sized { flex: 0 0 auto; }
+/* Just grow and take up the rest of the available space */
+.sc-split-pane > .se-pane.sm-auto-fill { flex-grow: 1; }
+/* scrollbar */
+.sc-scrollbar {
+    position: absolute;
+    left: 0px;
+    width: 20px;
+    top: 0px;
+    bottom: 0px;
+    background: #FAFAFA;
+    box-shadow: inset -4px 0 4px 0 rgba(25,25,25,0.04);
+}
+.sc-scrollbar .se-thumb {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    height: 0px;
+    background-color: rgba(0,0,0, 0.2);
+}
+.sc-scrollbar.sm-hide-thumb .se-thumb {
+    visibility: hidden;
+}
+.sc-scrollbar .se-highlight {
+    position: absolute;
+    width: 100%;
+    background-color: #A5AFBD;
+}
+/* layout */
+.sc-layout {
+    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%; /* by default takes the full width */
+}
+.sc-layout.sm-no-padding { padding: 0; }
+.sc-layout.sm-text-align-center { text-align: center; }
+.sc-layout.sm-text-align-right { text-align: right;}
+.sc-layout.sm-width-small { max-width: 300px; margin: 0px auto; }
+.sc-layout.sm-width-medium { max-width: 620px; margin: 0px auto; }
+.sc-layout.sm-width-large { max-width: 960px; margin: 0px auto; }
+/*
+  When used inside layouts paragraphs and headings get some
+  padding by default.
+
+  TODO: maybe this should be activated explicitly through a
+  Prose component that turns on the text paddings.
+*/
+.sc-layout > p { margin-bottom: 20px; }
+.sc-layout > h1 {
+    margin-bottom: 20px;
+}
+.sc-layout > h2 {
+    margin-bottom: 20px;
+}
+.sc-layout > h3 {
+    margin-bottom: 20px;
+}
+.sc-layout > h4 {
+    margin-bottom: 20px;
+}
+/* tabbed-pane */
+.sc-tabbed-pane { position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; }
+.sc-tabbed-pane .se-tabs { height: 40px; border-bottom: 1px solid #ddd; }
+.sc-tabbed-pane .se-tabs .se-tab {
+    display: block;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 20px;
+    color: #444;
+    font-size: 12px;
+    font-weight: 600;
+}
+.sc-tabbed-pane .se-tabs .se-tab:hover { background: #eee; border-bottom: 1px solid #bbb; }
+.sc-tabbed-pane .se-tabs .se-tab.sm-active { background: #eee; border-bottom: 1px solid #444; }
+.sc-tabbed-pane .se-tab-content { position: absolute; top: 40px; left: 0px; right: 0px; bottom: 0px; }
+/* table */
+.sc-table {
+    display: table;
+    width: 100%;
+}
+.sc-table .sc-table-cell {
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+/* grid */
+/* See: http://www.sitepoint.com/understanding-css-grid-systems */
+.sc-grid {}
+/* Make sure we use the border box model */
+.sc-grid > .se-row,
+.sc-grid > .se-cell { box-sizing: border-box; }
+.sc-grid > .se-row:before,
+.sc-grid > .se-row:after { content: " "; display: table; }
+.sc-grid > .se-row:after { clear: both; }
+/* Row styles */
+.sc-grid > .se-row { /* overflow: hidden; clear floats */ }
+.sc-grid > .se-row > .se-cell { position: relative; position: relative; }
+/*
+  scw = single column width
+  m = margin (1.6%)
+  mc = maximum columns (12)
+  cw = column width for a particular column (1-12)
+  scw = (100 – (m * (mc – 1))) / mc
+  cw = (scw * cs) + (m * (cs – 1))
+*/
+.sc-grid > .se-row > .se-cell.sm-column-1  { float:left; width: 6.86666666667%; }
+.sc-grid > .se-row > .se-cell.sm-column-2  { float:left; width: 15.3333333333%; }
+.sc-grid > .se-row > .se-cell.sm-column-3  { float:left; width: 23.8%; }
+.sc-grid > .se-row > .se-cell.sm-column-4  { float:left; width: 32.2666666667%; }
+.sc-grid > .se-row > .se-cell.sm-column-5  { float:left; width: 40.7333333333%; }
+.sc-grid > .se-row > .se-cell.sm-column-6  { float:left; width: 49.2%; }
+.sc-grid > .se-row > .se-cell.sm-column-7  { float:left; width: 57.6666666667%; }
+.sc-grid > .se-row > .se-cell.sm-column-8  { float:left; width: 66.1333333333%; }
+.sc-grid > .se-row > .se-cell.sm-column-9  { float:left; width: 74.6%; }
+.sc-grid > .se-row > .se-cell.sm-column-10 { float:left; width: 83.0666666667%; }
+.sc-grid > .se-row > .se-cell.sm-column-11 { float:left; width: 91.5333333333%; }
+.sc-grid > .se-row > .se-cell.sm-column-12 { width:100%; display:block; }
+.sc-grid > .se-row > .se-cell + .se-cell { margin-left: 1.6%; }
+/* Override for mobile */
+.sc-grid.sm-mobile {}
+.sc-grid.sm-mobile > .se-row {}
+.sc-grid.sm-mobile > .se-row > .se-cell + .se-cell { margin-left: 0; }
+.sc-grid.sm-mobile > .se-row > .se-cell { float: none; width: auto; }
+/* modal */
+.sc-modal {
+    z-index: 500000;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: rgba(0,0,0,0.7);
+}
+.sc-modal .se-body {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 30px;
+    right: 30px;
+    top: 30px;
+    background: white;
+    box-shadow: 0 0 25px 0 rgba(0,0,0,0.8);
+}
+.sc-modal.sm-width-small .se-body { max-width: 300px; }
+.sc-modal.sm-width-medium .se-body { max-width: 620px; }
+.sc-modal.sm-width-large .se-body { max-width: 960px; }
+/* input */
+/*
+  TODO: Provide different styles (analoge to _button.css);
+*/
+.sc-input {
+    max-width: 500px;
+    font-size: 12px;
+    height: 30px;
+    border-radius: 15px;
+    background: #fff;
+    border: none;
+    padding: 0 10px;
+}
+.sc-input.sm-centered {
+    text-align: center;
+}
+/* isolated-node */
+.sc-isolated-node {
+    position: relative;
+}
+.sc-isolated-node.sm-default-style.sm-selected {/*background: rgba(163,205,253, 0.6);*/
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+.sc-isolated-node.sm-default-style.sm-co-selected {/*background: rgba(163,205,253, 0.6);*/
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+.sc-isolated-node.sm-default-style.sm-focused {
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+.sc-isolated-node.sm-default-style.sm-co-focused {
+    outline: 2px solid;
+    outline-color: #2A8CFF;
+}
+/* Hide selection fragments when in selected-state */
+.sc-isolated-node.sm-selected ::selection,
+.sc-isolated-node.sm-selected ::selection {
+    background: transparent;
+}
+.sc-isolated-node.sm-selected {
+    background: rgba(163, 205, 253, 0.3);
+    outline: 2px solid #A3CDFD;
+}
+.sc-isolated-node-blocker {
+    position: absolute;
+    top: 0px; bottom: 0px; left: 0px; right: 0px;
+    cursor: default;
+}
+.sc-isolated-node.sm-no-blocker .sc-isolated-node-blocker {
+    display: none;
+}
+.sc-isolated-node > .se-bracket {
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+}
+.sc-isolated-node.sm-no-blocker > .se-bracket {
+    /*display:none;*/
+    visibility: hidden;
+}
+/* inline-node */
+.sc-inline-node {
+    cursor: default;
+    /* webkit disables selection for draggable elements */
+    /*-webkit-user-select: text;*/
+    position: relative;
+}
+/* overlay */
+.sc-overlay { z-index: 200; position: absolute; }
+.sc-overlay.sm-hidden { visibility: hidden; left: 0px; top: 0px; }
+.sc-overlay.sm-theme-dark {}
+.sc-overlay.sm-theme-dark::before {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4px 8px 4px;
+    border-color: transparent transparent #2E2E2C transparent;
+}
+.sc-overlay.sm-theme-dark > .se-active-tools {
+    border-radius: 5px;
+    background: #2E2E2C;
+    padding: 5px;
+}
+.sc-overlay.sm-theme-dark > .se-active-tools > .sc-tool-group {
+    display: inline-block;
+}
+.sc-overlay.sm-theme-dark > .se-active-tools > .sc-tool-group > .se-tool {
+    display: inline-block;
+}
+/* gutter */
+.sc-gutter { z-index: 200; position: absolute; }
+.sc-gutter.sm-hidden { visibility: hidden; position: fixed; }
+.sc-gutter.sm-theme-dark::before {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4px 8px 4px;
+    border-color: transparent transparent #2E2E2C transparent;
+}
+.sc-gutter.sm-theme-dark > .se-active-tools {
+    background: #2E2E2C;
+    padding: 5px;
+}
+/* toc */
+/* TOC
+-----------------------------------------------------*/
+.sc-toc {}
+.sc-toc .se-toc-entries { padding: 20px 0px; }
+.sc-toc .se-toc-entries .se-toc-entry {
+    color: #777;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    display: block;
+    padding: 2px 0px;
+    position: relative;
+}
+.sc-toc .se-toc-entries .se-toc-entry i.fa {
+    font-size: 12px;
+    visibility: hidden;
+    display: inline-block;
+    padding-right: 5px;
+}
+.sc-toc .se-toc-entries .se-toc-entry.sm-active { color: #222; }
+.sc-toc .se-toc-entries .se-toc-entry.sm-active i.fa { visibility: visible; }
+.sc-toc .se-toc-entries .se-toc-entry:hover { color: #222; }
+.sc-toc .se-toc-entries .se-toc-entry.sm-level-1 { font-size: 16px; margin-left: 20px; }
+.sc-toc .se-toc-entries .se-toc-entry.sm-level-2 { font-size: 14px; margin-left: 40px; }
+.sc-toc .se-toc-entries .se-toc-entry.sm-level-3 { font-size: 12px; margin-left: 60px; }
+/* surface */
+/* Surface
+----------------------------------------------------*/
+.sc-surface {}
+/* Non-Editables should have a regular cursor */
+.sc-surface *[contenteditable="false"] { cursor: default; }
+.sc-surface *[contenteditable="true"] { cursor: text; }
+// We want Firefox to have a transparent native selection
+   ::-moz-selection { background: rgba(77, 149, 233, 0.46); }
+.sm-selected-node { outline: 2px solid; outline-color: #2A8CFF; }
+.sm-selected-node.sm-collaborator-1 { outline-color: #A4E57A; }
+.sm-selected-node.sm-collaborator-2 { outline-color: #BC90FF; }
+.sm-selected-node.sm-collaborator-3 { outline-color: #D6BB4C; }
+.sm-selected-node.sm-collaborator-4 { outline-color: #BAA6A0; }
+.sm-selected-node.sm-collaborator-5 { outline-color: #7BB5B3; }
+/* spell-check */
+.sc-spell-error {
+    border-bottom: 2px dotted #FB4437;
+}
+/* text-property */
+.sc-text-property { white-space: pre-wrap; }
+.sc-text-property .se-cursor { position: relative; }
+.sc-text-property .se-cursor .se-cursor-inner {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 1px;
+    background: #999;
+}
+/* Cursor */
+.sc-text-property .se-cursor.sm-collaborator-1  .se-cursor-inner { background: #A4E57A; }
+.sc-text-property .se-cursor.sm-collaborator-2  .se-cursor-inner { background: #BC90FF; }
+.sc-text-property .se-cursor.sm-collaborator-3  .se-cursor-inner { background: #D6BB4C; }
+.sc-text-property .se-cursor.sm-collaborator-4  .se-cursor-inner { background: #BAA6A0; }
+.sc-text-property .se-cursor.sm-collaborator-5  .se-cursor-inner { background: #7BB5B3; }
+.sc-text-property .se-cursor.sm-collaborator-6  .se-cursor-inner { background: #FF7B7B; }
+.sc-text-property .se-cursor.sm-collaborator-7  .se-cursor-inner { background: #A0CC00; }
+.sc-text-property .se-cursor.sm-collaborator-8  .se-cursor-inner { background: #89CAFF; }
+.sc-text-property .se-cursor.sm-collaborator-9  .se-cursor-inner { background: #FF9FBF; }
+.sc-text-property .se-cursor.sm-collaborator-10 .se-cursor-inner { background: #FFB533; }
+/* Selection Fragment */
+.sc-text-property .se-selection-fragment { background-color: #ddd; }
+.sc-text-property .se-selection-fragment.sm-collaborator-1  { background: rgba(--collaborator-color-1, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-2  { background: rgba(--collaborator-color-2, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-3  { background: rgba(--collaborator-color-3, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-4  { background: rgba(--collaborator-color-4, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-5  { background: rgba(--collaborator-color-5, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-6  { background: rgba(--collaborator-color-6, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-7  { background: rgba(--collaborator-color-7, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-8  { background: rgba(--collaborator-color-8, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-9  { background: rgba(--collaborator-color-9, 0.30); }
+.sc-text-property .se-selection-fragment.sm-collaborator-10 { background: rgba(--collaborator-color-10, 0.30); }
+.sc-text-property .se-container-annotation.se-anchor { position: relative; }
+.sc-text-property .sm-highlighted { background: #ddd; }
+/* Substance-forms specific styles */
+.sc-minimal-switch-text-type > .sc-button {
+    display: inline-block;
+}
+.sc-minimal-switch-text-type {
+    border-left: 1px solid rgba(0,0,0,0.3);
+}
+.sc-xref {
+    background: #ffff82;
+}
+.sc-overlay {
+    font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+}
+
+/*# sourceMappingURL=substance-forms.css.map */

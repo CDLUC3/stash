@@ -33,26 +33,25 @@
     alert(JSON.stringify(data, null, '  '));
   }
 </script>
-
-<div class="page">
-  <form id="submission" onsubmit="_onSubmit(event)">
-    <div class="form-section">
-      <div class="form-heading">Abstract</div>
-      <div id="survey_motivation" editable data-type="area">
-        <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
-        <p>You can also use lists:</p>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-        </ul>
+  <div class="page">
+    <form id="submission" onsubmit="_onSubmit(event)">
+      <div class="form-section substance-form">
+        <div class="form-heading">Abstract</div>
+        <div id="survey_motivation" editable data-type="area">
+          <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
+          <p>You can also use lists:</p>
+          <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+          </ul>
+        </div>
       </div>
-    </div>
 
-    <div class="form-section">
-      <button id="submit-button" type="submit" form="submission">Submit</button>
-      <div class="form-hint text-center">
-        This is just a demo, nothing is actually submitted.
+      <div class="form-section">
+        <button id="submit-button" type="submit" form="submission">Submit</button>
+        <div class="form-hint text-center">
+          This is just a demo, nothing is actually submitted.
+        </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
