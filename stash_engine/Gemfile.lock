@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/CDLUC3/substance-rails.git
-  revision: e8eb7c923046b56330c120a30deb12a6bdb00613
-  specs:
-    substance-rails (0.0.2)
-      actionpack (>= 4.0)
-      railties (>= 4.0)
-
 PATH
   remote: ../stash-sword
   specs:
@@ -331,7 +323,6 @@ DEPENDENCIES
   sortable-table (~> 0.1)
   stash-sword!
   stash_engine!
-  substance-rails!
   webmock (~> 3.0)
 
 BUNDLED WITH

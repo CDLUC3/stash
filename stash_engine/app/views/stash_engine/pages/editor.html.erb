@@ -1,3 +1,58 @@
 <% @page_title = 'About - Publish and Preserve your Data' %>
 <h1>Editor Demo</h1>
 
+<style>
+  .sc-rich-text-area {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 0px 20px;
+    padding-bottom: 0px;
+  }
+
+  .sc-rich-text-area .sc-container-editor > * {
+    margin: 10px 0;
+  }
+
+</style>
+
+<script type="text/javascript">
+  var forms;
+  window.addEventListener('load', function() {
+    forms = new SubstanceForms();
+    // Activate richtext areas via API
+    forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'));
+  });
+
+  function _onSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var data = {
+      survey_motivation: forms.getHTML('survey_motivation')
+    };
+    console.info(data);
+    alert(JSON.stringify(data, null, '  '));
+  }
+</script>
+
+<div class="page">
+  <form id="submission" onsubmit="_onSubmit(event)">
+    <div class="form-section">
+      <div class="form-heading">Abstract</div>
+      <div id="survey_motivation" editable data-type="area">
+        <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
+        <p>You can also use lists:</p>
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <button id="submit-button" type="submit" form="submission">Submit</button>
+      <div class="form-hint text-center">
+        This is just a demo, nothing is actually submitted.
+      </div>
+    </div>
+  </form>
+</div>
