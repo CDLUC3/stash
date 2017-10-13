@@ -4,3 +4,8 @@
   font-family: 'KievitWeb';
   src: inline('../fonts/KievitWeb.woff') format('woff');
 }
+@font-face {
+  font-family: 'KievitWeb Bold';
+  src: inline('../fonts/KievitWeb-Bold.woff') format('woff');
+  font-weight: bold;
+}
