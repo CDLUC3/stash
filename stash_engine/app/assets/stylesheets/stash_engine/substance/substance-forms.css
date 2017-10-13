@@ -385,6 +385,7 @@
 /* strong */
 .sc-strong {
     font-weight: bold;
+    -webkit-font-smoothing: antialiased;
 }
 /* link */
 .sc-link {

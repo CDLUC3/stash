@@ -20,7 +20,9 @@
   window.addEventListener('load', function() {
     forms = new SubstanceForms();
     // Activate richtext areas via API
-    forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'));
+    forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'), {
+      enabledPackages: ['strong', 'emphasis', 'link', 'list', 'heading', 'table']
+    });
   });
 
   function _onSubmit(e) {
