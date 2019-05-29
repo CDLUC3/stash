@@ -32,13 +32,13 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_dependency 'rest-client', '~> 2.0'
   s.add_dependency 'resync-client', '~> 0.4', '>= 0.4.6'
   s.add_dependency 'rsolr', '~> 1.1'
-  s.add_dependency 'sqlite3', '~> 1.3', '>= 1.3.10'
+  s.add_dependency 'sqlite3', '~> 1.3', '>= 1.3.13'
   s.add_dependency 'standalone_migrations', '~> 5.0'
 
   s.add_dependency 'datacite-mapping', '~> 0.3'
   s.add_dependency 'stash-wrapper'
 
-  s.add_development_dependency 'bundler', '~> 1.7'
+  s.add_development_dependency 'bundler', '~> 1.17.3'
   s.add_development_dependency 'equivalent-xml', '~> 0.6.0'
   s.add_development_dependency 'github-markup', '~> 1.4'
   s.add_development_dependency 'nokogiri', '~> 1.8'
