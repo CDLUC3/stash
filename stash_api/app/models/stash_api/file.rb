@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'presenter'
+
 module StashApi
   class File
     include StashApi::Presenter
