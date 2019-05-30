@@ -20,6 +20,7 @@ module StashEngine
       role == 'superuser'
     end
 
+    # rubocop:disable Metrics/AbcSize
     def self.split_name(name)
       comma_split = name.split(',')
       return [comma_split[1].strip, comma_split[0].strip] if comma_split.length == 2 # gets a reversed name with comma like "Janee, Greg"
@@ -28,6 +29,7 @@ module StashEngine
       last = name.split(' ').last unless name.split(' ').last == first
       [first, last]
     end
+    # rubocop:enable Metrics/AbcSize
 
     def tenant
       Tenant.find(tenant_id)
