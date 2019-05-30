@@ -18,7 +18,6 @@ PATH
       rsolr
       sass-rails (~> 5.0)
       solr_wrapper
-      thor (= 0.19.1)
       turbolinks
     stash_engine (0.0.17)
       amoeba (~> 3.0.0)
@@ -33,12 +32,14 @@ PATH
       jquery-turbolinks (~> 2.1.0)
       jquery-ui-rails
       kaminari
+      mysql2
       omniauth (~> 1.9.0)
       omniauth-google-oauth2 (~> 0.6.0)
       omniauth-orcid (~> 2.1.1)
       omniauth-shibboleth (~> 1.2.1)
       rails (~> 4.2.11)
       redcarpet (~> 3.3)
+      rest-client
       rinku
       sortable-table
       wicked_pdf (~> 1.1.0)

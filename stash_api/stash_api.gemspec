@@ -28,8 +28,11 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'doorkeeper', '~> 4.4.2'
+  s.add_dependency 'mysql2'
   s.add_dependency 'rails', '~> 4.2.11'
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'combustion'
   s.add_development_dependency 'rubocop', '0.57.2'
+  s.add_dependency 'stash_datacite'
+  s.add_dependency 'stash_engine'
 end

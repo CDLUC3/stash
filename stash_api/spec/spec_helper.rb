@@ -21,8 +21,8 @@ end
 # Stash
 
 ENV['STASH_ENV'] = 'test'
-# require 'stash_engine'
-# require 'stash_datacite'
+require 'stash_engine'
+require 'stash_datacite'
 require 'stash_api'
 
 APP_CONFIG = OpenStruct.new(YAML.load_file(::File.expand_path('config/app_config.yml', __dir__))['test'])
