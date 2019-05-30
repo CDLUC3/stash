@@ -25,7 +25,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.add_dependency 'cirneco', '~> 0.9.16'
+  s.add_dependency 'cirneco', '~> 0.9.27'
   s.add_dependency 'datacite-mapping', '~> 0.3'
   s.add_dependency 'ezid-client', '~> 1.5'
   s.add_dependency 'merritt-manifest', '~> 0.1', '>= 0.1.3'
@@ -37,7 +37,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_dependency 'stash_datacite'
   s.add_dependency 'stash_engine' # TODO: should stash_datacite export this?
 
-  s.add_development_dependency 'bundler', '~> 1.7'
+  s.add_development_dependency 'bundler', '~> 1.17.3'
   s.add_development_dependency 'nokogiri', '~> 1.8'
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.2'
