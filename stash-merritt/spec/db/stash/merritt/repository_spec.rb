@@ -123,7 +123,8 @@ module Stash
           expect(resource.current_state).to eq('submitted')
         end
 
-        it 'cleans up public/system files' do
+        # lets not delete too quickly
+        xit 'cleans up public/system files' do
           resource_public = "#{public_system}/#{resource.id}"
           FileUtils.mkdir(resource_public)
           stash_wrapper = "#{resource_public}/stash-wrapper.xml"

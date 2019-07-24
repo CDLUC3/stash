@@ -339,7 +339,8 @@ module Stash
           )
         end
 
-        it 'removes uploaded files on success' do
+        # hacking to keep from removing files so fast for the next month or so we're running Dash
+        xit 'removes uploaded files on success' do
           expect(logger).not_to receive(:warn)
           expect(logger).not_to receive(:error)
           repo.harvested(identifier: identifier, record_identifier: record_identifier)
@@ -348,7 +349,8 @@ module Stash
           end
         end
 
-        it 'removes the uploads dir on success' do
+        # hacking to keep from removing files so fast for the next month or so we're running Dash
+        xit 'removes the uploads dir on success' do
           expect(logger).not_to receive(:warn)
           expect(logger).not_to receive(:error)
           repo.harvested(identifier: identifier, record_identifier: record_identifier)
@@ -362,7 +364,9 @@ module Stash
           after(:each) do
             allow(FileUtils).to receive(:remove_entry_secure).and_call_original
           end
-          it 'logs the error' do
+
+          # removing test for file cleanup error because not crazily deleting files
+          xit 'logs the error' do
             msg = nil
             expect(logger).to(receive(:warn)).once { |m| msg = m }
             repo.harvested(identifier: identifier, record_identifier: record_identifier)
