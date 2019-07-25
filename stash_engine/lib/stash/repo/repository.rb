@@ -114,9 +114,9 @@ module Stash
       end
 
       def cleanup_files(resource)
-        remove_file_uploads(resource)
-        remove_upload_dir(resource)
-        remove_public_dir(resource)
+        # remove_file_uploads(resource)
+        # remove_upload_dir(resource)
+        # remove_public_dir(resource)
       rescue StandardError => e
         msg = "An unexpected error occurred when cleaning up files for resource #{resource.id}: "
         msg << to_msg(e)

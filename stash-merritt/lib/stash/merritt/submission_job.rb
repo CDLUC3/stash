@@ -47,7 +47,7 @@ module Stash
         package = create_package
         submit(package)
         update_metadata(package.dc4_xml)
-        cleanup(package)
+        # cleanup(package)
         Stash::Repo::SubmissionResult.success(resource_id: resource_id, request_desc: description, message: 'Success')
       end
 

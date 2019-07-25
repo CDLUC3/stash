@@ -105,7 +105,8 @@ module Stash
             job.submit!
           end
 
-          it 'cleans up the package' do
+          # Lets not be so hasty in cleanup
+          xit 'cleans up the package' do
             expect(package).to receive(:cleanup!)
             job.submit!
           end
@@ -134,7 +135,8 @@ module Stash
             job.submit!
           end
 
-          it 'cleans up the package' do
+          # lets not be so hasty in cleanup
+          xit 'cleans up the package' do
             expect(package).to receive(:cleanup!)
             job.submit!
           end
@@ -170,7 +172,8 @@ module Stash
             expect(job.submit!.error).to be_a(Ezid::IdentifierNotFoundError)
           end
 
-          it 'fails on a package cleanup error' do
+          # We are disabling cleanup for now
+          xit 'fails on a package cleanup error' do
             expect(package).to receive(:cleanup!).and_raise(Errno::ENOENT)
             expect(job.submit!.error).to be_a(Errno::ENOENT)
           end
