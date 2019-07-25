@@ -14,8 +14,12 @@ namespace :dash2_migration do
   task test: :environment do
     # see https://stackoverflow.com/questions/27913457/ruby-on-rails-specify-environment-in-rake-task
     ActiveRecord::Base.establish_connection('production')  # we only need to migrate from production env
+
+    options = {}
+    options[:include] = [:resources]
+
     my_id = StashEngine::Identifier.find(327)
-    hash = StashEngine::StashIdentifierSerializer.new(my_id).serializable_hash
+    hash = StashEngine::StashIdentifierSerializer.new(my_id, options).serializable_hash
     pp(hash)
   end
 end
