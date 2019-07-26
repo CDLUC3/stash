@@ -5,7 +5,8 @@ module StashEngine
       @my_model = my_model
     end
 
-    def generic_hash
+    def hash
+      return nil if @my_model.nil?
       @my_model.slice(*self.class::COLUMNS)
     end
 

@@ -6,7 +6,7 @@ module StashEngine
     COLUMNS = (StashEngine::ResourceState.column_names - REJECT_COLUMNS).freeze
 
     def hash
-      generic_hash.merge(
+      super.merge(
         user: UserSerializer.new(@my_model.user).hash
       )
     end
