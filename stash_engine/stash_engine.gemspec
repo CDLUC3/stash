@@ -24,7 +24,6 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_dependency 'carrierwave', '~> 0.10.0'
   s.add_dependency 'ckeditor', '~> 4.3.0'
   s.add_dependency 'concurrent-ruby', '~> 1.0'
-  s.add_dependency 'fast_jsonapi', '~>1.5'
   s.add_dependency 'filesize', '~> 0.1.1'
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'httpclient', '~> 2.8.3'

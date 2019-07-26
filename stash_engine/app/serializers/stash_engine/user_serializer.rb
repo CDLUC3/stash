@@ -1,7 +1,13 @@
-require 'fast_jsonapi'
 module StashEngine
   class UserSerializer
-    include FastJsonapi::ObjectSerializer
-    attributes %w[first_name last_name email uid provider oauth_token created_at updated_at tenant_id last_login role orcid].map(&:intern)
+    include SerializerMixin
+
+    REJECT_COLUMNS = %w[id]
+    COLUMNS = (StashEngine::User.column_names - REJECT_COLUMNS).freeze
+
+    def hash
+      generic_hash
+    end
+
   end
 end

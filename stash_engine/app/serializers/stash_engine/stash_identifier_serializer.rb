@@ -1,10 +1,13 @@
-require 'fast_jsonapi'
 module StashEngine
   class StashIdentifierSerializer
-    include FastJsonapi::ObjectSerializer
-    attributes :identifier, :identifier_type, :storage_size, :created_at, :updated_at
+    include SerializerMixin
 
-    has_many :resources
-    belongs_to :user
+    COLUMNS = StashEngine::Identifier.column_names.freeze
+
+    def hash
+      generic_hash.merge(
+        resources: @my_model.resources.order(:id).map{|res| StashEngine::ResourceSerializer.new(res).hash})
+    end
+
   end
 end
