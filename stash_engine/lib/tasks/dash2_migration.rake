@@ -14,10 +14,16 @@ namespace :dash2_migration do
   task test: :environment do
     # see https://stackoverflow.com/questions/27913457/ruby-on-rails-specify-environment-in-rake-task
     ActiveRecord::Base.establish_connection('production')  # we only need to migrate from production env
+    # test = [63, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 97, 98,
+    #        99, 100, 101, 102, 103, 115, 116, 275, 299, 275, 327, 326, 326, 327, 359, 399]
+    test = [327]
 
-    my_id = StashEngine::Identifier.find(327)
-    hash = StashEngine::StashIdentifierSerializer.new(my_id).hash
-    pp(hash)
+    test.each do |t|
+      my_id = StashEngine::Identifier.find(t)
+      hash = StashEngine::StashIdentifierSerializer.new(my_id).hash
+      pp(hash)
+    end
+    # puts(hash.to_json)
   end
 end
 
