@@ -7,9 +7,9 @@ module StashEngine
 
     def hash
       {
-          geolocation_place: GeolocationPlaceSerializer.new(@my_model.geolocation_place).hash,
-          geolocation_point: GeolocationPointSerializer.new(@my_model.geolocation_point).hash,
-          geolocaton_box: GeolocationBoxSerializer.new(@my_model.geolocation_box).hash
+        geolocation_place: GeolocationPlaceSerializer.new(@my_model.geolocation_place).hash,
+        geolocation_point: GeolocationPointSerializer.new(@my_model.geolocation_point).hash,
+        geolocaton_box: GeolocationBoxSerializer.new(@my_model.geolocation_box).hash
       }
     end
 
