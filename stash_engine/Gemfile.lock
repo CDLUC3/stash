@@ -14,7 +14,6 @@ PATH
       carrierwave (~> 0.10.0)
       ckeditor (~> 4.3.0)
       concurrent-ruby (~> 1.0)
-      fast_jsonapi (~> 1.5)
       filesize (~> 0.1.1)
       font-awesome-rails
       httpclient (~> 2.8.3)
@@ -110,8 +109,6 @@ GEM
     erubis (2.7.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
-    fast_jsonapi (1.5)
-      activesupport (>= 4.2)
     ffi (1.11.1)
     filesize (0.1.1)
     font-awesome-rails (4.7.0.5)

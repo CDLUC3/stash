@@ -1,3 +1,6 @@
+-- Please put two blank lines in between separate MySQL queries, because this is kind of a hack to get data in quickly just for this one test
+
+
 INSERT INTO `stash_engine_identifiers` (`id`, `identifier`, `identifier_type`, `storage_size`, `created_at`, `updated_at`)
 VALUES
 (327, '10.7272/Q6RX997G', 'DOI', 5168709, '2017-08-22 19:34:58', '2017-09-12 22:06:42');
@@ -6,7 +9,6 @@ VALUES
 INSERT INTO `stash_engine_users` (`id`, `first_name`, `last_name`, `email`, `uid`, `provider`, `oauth_token`, `created_at`, `updated_at`, `tenant_id`, `last_login`, `role`, `orcid`)
 VALUES
 (299, 'Sergio', 'Baranzini', 'sebaran@cgl.ucsf.edu', '087193@ucsf.edu', 'shibboleth', NULL, '2017-08-21 17:55:34', '2019-03-14 18:12:12', 'ucsf', '2019-03-14 18:12:12', 'user', '0000-0003-0067-194X');
-
 
 
 INSERT INTO `stash_engine_resources` (`id`, `user_id`, `current_resource_state_id`, `created_at`, `updated_at`, `has_geolocation`, `download_uri`, `identifier_id`, `update_uri`, `title`, `current_editor_id`, `publication_date`, `accepted_agreement`, `tenant_id`)
@@ -46,6 +48,7 @@ VALUES
 (19, '2017-10-02 07:00:00', 494, '2017-08-21 18:49:39', '2017-08-22 19:34:54'),
 (25, '2017-10-02 07:00:00', 519, '2017-08-30 21:39:35', '2017-08-30 21:39:35');
 
+
 INSERT INTO `stash_engine_file_uploads` (`id`, `upload_file_name`, `upload_content_type`, `upload_file_size`, `resource_id`, `upload_updated_at`, `created_at`, `updated_at`, `temp_file_path`, `file_state`, `url`, `status_code`, `timed_out`, `original_url`, `cloud_service`)
 VALUES
 (25196, X'4D61785F506C616E636B5F5477696E5F6D657461646174612E747874', 'text/plain', 4617, 494, '2017-08-21 19:18:52', '2017-08-21 19:18:52', '2017-08-21 19:18:52', X'2F617070732F64617368322F617070732F75692F72656C65617365732F32303137303831383030313131312F75706C6F6164732F3439342F4D61785F506C616E636B5F5477696E5F6D657461646174612E747874', 'created', NULL, NULL, 0, NULL, NULL),
@@ -59,19 +62,23 @@ VALUES
 (886, 299, 'submitted', '2017-08-21 17:55:41', '2017-08-22 19:40:02', 494),
 (911, 299, 'submitted', '2017-08-30 21:39:35', '2017-08-30 21:50:03', 519);
 
+
 INSERT INTO `stash_engine_shares` (`id`, `secret_id`, `resource_id`, `created_at`, `updated_at`)
 VALUES
 (5, '5ATYuvmjECMr12HdycK9BJ4m5HibQuZsRGQwlBj_BBI', 494, '2017-08-23 01:10:22', '2017-08-23 01:10:22');
+
 
 INSERT INTO `stash_engine_submission_logs` (`id`, `resource_id`, `archive_response`, `created_at`, `updated_at`, `archive_submission_request`)
 VALUES
 (126, 494, 'Success', '2017-08-22 19:35:08', '2017-08-22 19:35:08', 'Stash::Merritt::SubmissionJob for resource 494 (): posting new object to http://uc3-mrtsword-prd.cdlib.org:39001/mrtsword/collection/ucsf_lib_datashare (tenant: ucsf)'),
 (135, 519, 'Success', '2017-08-30 21:45:28', '2017-08-30 21:45:28', 'Stash::Merritt::SubmissionJob for resource 519 (doi:10.7272/Q6RX997G): posting update to http://uc3-mrtsword-prd.cdlib.org:39001/mrtsword/edit/ucsf_lib_datashare/doi%3A10.7272%2FQ6RX997G (tenant: ucsf)');
 
+
 INSERT INTO `stash_engine_versions` (`id`, `version`, `zip_filename`, `resource_id`, `created_at`, `updated_at`, `merritt_version`)
 VALUES
 (486, 1, '494_archive.zip', 494, '2017-08-21 17:55:41', '2017-08-22 19:35:08', 1),
 (511, 2, '519_archive.zip', 519, '2017-08-30 21:39:35', '2017-08-30 21:45:28', 2);
+
 
 INSERT INTO `dcs_affiliations` (`id`, `short_name`, `long_name`, `abbreviation`, `created_at`, `updated_at`)
 VALUES
@@ -101,6 +108,7 @@ VALUES
 (3182, 86, 1092, '2017-08-30 21:43:43', '2017-08-30 21:43:43'),
 (3184, 86, 1093, '2017-08-30 21:44:02', '2017-08-30 21:44:02'),
 (3185, 84, 1094, '2017-08-30 21:44:15', '2017-08-30 21:44:15');
+
 
 INSERT INTO `dcs_contributors` (`id`, `contributor_name`, `contributor_type`, `name_identifier_id`, `resource_id`, `created_at`, `updated_at`, `award_number`)
 VALUES
@@ -211,3 +219,29 @@ VALUES
 (1206, 519, 11318, '2017-08-30 21:39:35', '2017-08-30 21:39:35'),
 (1207, 519, 3303, '2017-08-30 21:39:35', '2017-08-30 21:39:35'),
 (1208, 519, 2923, '2017-08-30 21:39:35', '2017-08-30 21:39:35');
+
+
+INSERT INTO `dcs_publishers` (`id`, `publisher`, `resource_id`, `created_at`, `updated_at`)
+VALUES
+(486, 'UC San Francisco', 494, '2017-08-21 17:55:42', '2017-08-21 17:55:42'),
+(511, 'UC San Francisco', 519, '2017-08-30 21:39:35', '2017-08-30 21:39:35');
+
+
+INSERT INTO `dcs_contributors` (`id`, `contributor_name`, `contributor_type`, `name_identifier_id`, `resource_id`, `created_at`, `updated_at`, `award_number`)
+VALUES
+(12, 'Center for Information Technology Research in the Interest of Society', 'funder', NULL, 11, '2016-11-16 23:48:53', '2016-11-16 23:48:53', '2015-321');
+
+
+INSERT INTO `dcs_affiliations_contributors` (`id`, `affiliation_id`, `contributor_id`, `created_at`, `updated_at`)
+VALUES
+(1, 84, 382, '2018-08-20 19:07:54', '2018-08-20 19:07:54');
+
+
+INSERT INTO `dcs_sizes` (`id`, `size`, `resource_id`, `created_at`, `updated_at`)
+VALUES
+(10, '18421', 494, '2016-11-16 23:49:25', '2016-11-16 23:49:25');
+
+
+INSERT INTO `stash_engine_orcid_invitations` (`id`, `email`, `identifier_id`, `first_name`, `last_name`, `secret`, `orcid`, `invited_at`, `accepted_at`)
+VALUES
+(19, 'mconklin@ucmerced.edu', 327, 'Martha', 'Conklin', '_UhMed-hHfcv-tG4SjVY1A', NULL, '2017-09-29 19:55:03', NULL);

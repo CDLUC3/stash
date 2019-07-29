@@ -27,7 +27,7 @@ module StashEngine
         resource_type: ResourceTypeSerializer.new(@my_model.resource_type).hash,
         rights: @my_model.rights.map{|i| RightSerializer.new(i).hash },
         sizes: @my_model.sizes.map{|i| SizeSerializer.new(i).hash },
-        subjects: @my_model.subjects.map{|i| SubjectSerializer.new(i).hash }
+        subjects: @my_model.subjects.order(subject: :asc).map{|i| SubjectSerializer.new(i).hash }
         )
     end
 
