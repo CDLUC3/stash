@@ -8,13 +8,13 @@ VALUES
 
 INSERT INTO `stash_engine_users` (`id`, `first_name`, `last_name`, `email`, `uid`, `provider`, `oauth_token`, `created_at`, `updated_at`, `tenant_id`, `last_login`, `role`, `orcid`)
 VALUES
-(299, 'Sergio', 'Baranzini', 'sebaran@cgl.ucsf.edu', '087193@ucsf.edu', 'shibboleth', NULL, '2017-08-21 17:55:34', '2019-03-14 18:12:12', 'ucsf', '2019-03-14 18:12:12', 'user', '0000-0003-0067-194X');
+(299, 'Sergio', 'Baranzini', 'sebaran@cgl.ucsf.edu', '087193@ucsf.edu', 'shibboleth', NULL, '2017-08-21 17:55:34', '2019-03-14 18:12:12', 'ucop', '2019-03-14 18:12:12', 'user', '0000-0003-0067-194X');
 
 
 INSERT INTO `stash_engine_resources` (`id`, `user_id`, `current_resource_state_id`, `created_at`, `updated_at`, `has_geolocation`, `download_uri`, `identifier_id`, `update_uri`, `title`, `current_editor_id`, `publication_date`, `accepted_agreement`, `tenant_id`)
 VALUES
-(494, 299, 886, '2017-08-21 17:55:41', '2017-10-25 00:04:34', 1, 'http://merritt.cdlib.org/d/ark%3A%2Fb7272%2Fq6rx997g', 327, 'http://uc3-mrtsword-prd.cdlib.org:39001/mrtsword/edit/ucsf_lib_datashare/doi%3A10.7272%2FQ6RX997G', 'Gut Microbiota from Multiple Sclerosis patients triggers spontaneous autoimmune encephalomyelitis in mice --16S data--', 299, '2017-10-02 07:00:00', NULL, 'ucsf'),
-(519, 299, 911, '2017-08-30 21:39:35', '2017-10-25 00:04:39', 1, 'http://merritt.cdlib.org/d/ark%3A%2Fb7272%2Fq6rx997g', 327, 'http://uc3-mrtsword-prd.cdlib.org:39001/mrtsword/edit/ucsf_lib_datashare/doi%3A10.7272%2FQ6RX997G', 'Gut Microbiota from Multiple Sclerosis patients triggers spontaneous autoimmune encephalomyelitis in mice --16S data--', 299, '2017-10-02 07:00:00', NULL, 'ucsf');
+(494, 299, 886, '2017-08-21 17:55:41', '2017-10-25 00:04:34', 1, 'http://merritt.cdlib.org/d/ark%3A%2Fb7272%2Fq6rx997g', 327, 'http://uc3-mrtsword-prd.cdlib.org:39001/mrtsword/edit/ucsf_lib_datashare/doi%3A10.7272%2FQ6RX997G', 'Gut Microbiota from Multiple Sclerosis patients triggers spontaneous autoimmune encephalomyelitis in mice --16S data--', 299, '2017-10-02 07:00:00', NULL, 'ucop'),
+(519, 299, 911, '2017-08-30 21:39:35', '2017-10-25 00:04:39', 1, 'http://merritt.cdlib.org/d/ark%3A%2Fb7272%2Fq6rx997g', 327, 'http://uc3-mrtsword-prd.cdlib.org:39001/mrtsword/edit/ucsf_lib_datashare/doi%3A10.7272%2FQ6RX997G', 'Gut Microbiota from Multiple Sclerosis patients triggers spontaneous autoimmune encephalomyelitis in mice --16S data--', 299, '2017-10-02 07:00:00', NULL, 'ucop');
 
 
 INSERT INTO `stash_engine_authors` (`id`, `author_first_name`, `author_last_name`, `author_email`, `author_orcid`, `resource_id`, `created_at`, `updated_at`)
