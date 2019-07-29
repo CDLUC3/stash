@@ -38,6 +38,9 @@ describe StashDatacite do
         next if q.start_with?('--')
         ActiveRecord::Base.connection.execute(q)
       end
+
+      tenant = instance_double(Tenant)
+      allow(Tenant).to receive(:find).with('ucop').and_return(tenant)
     end
 
     it 'serializes a full record' do
