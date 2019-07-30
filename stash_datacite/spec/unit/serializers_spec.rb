@@ -39,8 +39,8 @@ describe StashDatacite do
         ActiveRecord::Base.connection.execute(q)
       end
 
-      # tenant = instance_double(Tenant)
-      allow(StashEngine::Tenant).to receive(:find).with('ucop').and_return([])
+      tenant = {full_domain: 'test.dash.org' }.to_ostruct
+      allow(StashEngine::Tenant).to receive(:find).with('ucop').and_return(tenant)
     end
 
     it 'serializes a full record' do
