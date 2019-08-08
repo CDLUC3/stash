@@ -1,5 +1,6 @@
 require 'pp'
 require 'byebug'
+require 'json'
 namespace :dash2_migration do
 
   # some good stash_engine_identifiers to look at
@@ -24,5 +25,18 @@ namespace :dash2_migration do
       pp(hash)
     end
     # puts(hash.to_json)
+  end
+
+  desc 'Output file for identifiers'
+  task output_ids: :environment do
+    ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
+    out_array = []
+    StashEngine::Identifier.joins(:resources).distinct.each_with_index do |my_ident, counter|
+      puts "#{counter}  #{my_ident.to_s}"
+      out_array.push(StashEngine::StashIdentifierSerializer.new(my_ident).hash)
+    end
+    File.open("identifiers.json","w") do |f|
+      f.write(out_array.to_json)
+    end
   end
 end
