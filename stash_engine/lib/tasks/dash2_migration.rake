@@ -35,9 +35,22 @@ namespace :dash2_migration do
     StashEngine::Identifier.joins(:resources).distinct.each_with_index do |my_ident, counter|
       puts "#{counter}  #{my_ident.to_s}"
       next if SKIP_IDENTIFIERS.include?(my_ident.id)
-      out_array.push(StashEngine::StashIdentifierSerializer.new(my_ident).hash)
+      out_array.push(StashEngine::ResourceSerializer.new(my_ident).hash)
     end
     File.open("identifiers.json","w") do |f|
+      f.write(out_array.to_json)
+    end
+  end
+
+  desc 'Output file for resources without identifiers'
+  task output_resources: :environment do
+    ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
+    out_array = []
+    StashEngine::Resource.where(identifier_id: nil).each_with_index do |my_res, counter|
+      puts "#{counter+1}  resource_id: #{my_res.id}"
+      out_array.push(StashEngine::ResourceSerializer.new(my_res).hash)
+    end
+    File.open("resources.json","w") do |f|
       f.write(out_array.to_json)
     end
   end
