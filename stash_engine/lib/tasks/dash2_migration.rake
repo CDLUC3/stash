@@ -29,10 +29,12 @@ namespace :dash2_migration do
 
   desc 'Output file for identifiers'
   task output_ids: :environment do
+    SKIP_IDENTIFIERS = [119, 123, 124, 137, 586, 601]
     ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
     out_array = []
     StashEngine::Identifier.joins(:resources).distinct.each_with_index do |my_ident, counter|
       puts "#{counter}  #{my_ident.to_s}"
+      next if SKIP_IDENTIFIERS.include?(my_ident.id)
       out_array.push(StashEngine::StashIdentifierSerializer.new(my_ident).hash)
     end
     File.open("identifiers.json","w") do |f|
