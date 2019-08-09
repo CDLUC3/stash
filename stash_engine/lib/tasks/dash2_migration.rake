@@ -1,6 +1,7 @@
 require 'pp'
 require 'byebug'
 require 'json'
+# rubocop:disable Metrics/BlockLength
 namespace :dash2_migration do
 
   # some good stash_engine_identifiers to look at
@@ -29,15 +30,15 @@ namespace :dash2_migration do
 
   desc 'Output file for identifiers'
   task output_ids: :environment do
-    SKIP_IDENTIFIERS = [119, 123, 124, 137, 586, 601]
+    SKIP_IDENTIFIERS = [119, 123, 124, 137, 586, 601].freeze
     ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
     out_array = []
     StashEngine::Identifier.joins(:resources).distinct.each_with_index do |my_ident, counter|
-      puts "#{counter}  #{my_ident.to_s}"
+      puts "#{counter}  #{my_ident}"
       next if SKIP_IDENTIFIERS.include?(my_ident.id)
       out_array.push(StashEngine::ResourceSerializer.new(my_ident).hash)
     end
-    File.open("identifiers.json","w") do |f|
+    File.open('identifiers.json', 'w') do |f|
       f.write(out_array.to_json)
     end
   end
@@ -47,11 +48,12 @@ namespace :dash2_migration do
     ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
     out_array = []
     StashEngine::Resource.where(identifier_id: nil).each_with_index do |my_res, counter|
-      puts "#{counter+1}  resource_id: #{my_res.id}"
+      puts "#{counter + 1}  resource_id: #{my_res.id}"
       out_array.push(StashEngine::ResourceSerializer.new(my_res).hash)
     end
-    File.open("resources.json","w") do |f|
+    File.open('resources.json', 'w') do |f|
       f.write(out_array.to_json)
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
