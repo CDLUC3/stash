@@ -15,6 +15,7 @@ module StashDatacite
 
       def title
         return '[No title supplied]' if @resource.title.blank?
+
         @resource.title
       end
 
@@ -49,6 +50,7 @@ module StashDatacite
       # size is the size of the whole dataset, all versions
       def size
         return 0 if @resource.identifier.nil?
+
         @resource.identifier.storage_size || 0
       end
 
@@ -64,6 +66,7 @@ module StashDatacite
       def embargo_status
         return 'private' if @resource.embargoed?
         return 'published' if @resource.submitted?
+
         resource.current_state
       end
 
@@ -77,6 +80,7 @@ module StashDatacite
 
       def edited_by_id
         return @resource.user_id if @resource.current_editor_id.nil?
+
         @resource.current_editor_id
       end
 
@@ -88,17 +92,20 @@ module StashDatacite
 
       def edited_by_name_w_role
         return edited_by_name if resource.current_editor_id.nil? || resource.user_id == resource.current_editor_id
+
         "#{edited_by_name} (admin)"
       end
 
       def version
         return 1 if @resource.stash_version.nil?
+
         @resource.stash_version.version
       end
 
       # edit history comment, only one per resource (v) right now, but may have more history per version if/when we expand event we track
       def comment
         return '' if @resource.edit_histories.empty?
+
         @resource.edit_histories.first.user_comment.to_s
       end
 

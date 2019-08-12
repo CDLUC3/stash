@@ -25,6 +25,9 @@ end
 describe StashDatacite do
   describe 'Serialization' do
     before(:each) do
+      # needed because of bad column names set somehow in ActiveRecord
+      ActiveRecord::Base.descendants.each(&:reset_column_information)
+
       allow(Doorkeeper::Application).to receive(:column_names).and_return(%w[id name uid secret redirect_uri scopes
                                                                              created_at updated_at owner_id owner_type confidential])
       allow(Doorkeeper::Application).to receive(:where).with(owner_id: 299).and_return([])
@@ -36,10 +39,14 @@ describe StashDatacite do
       my_queries = File.read(StashDatacite::Engine.root.join('spec', 'fixtures', 'full_record_for_export.sql')).split("\n\n")
       my_queries.each do |q|
         next if q.start_with?('--')
+
         ActiveRecord::Base.connection.execute(q)
       end
 
-      tenant = {full_domain: 'test.dash.org' }.to_ostruct
+      # needed because of bad column names set somehow in ActiveRecord
+      ActiveRecord::Base.descendants.each(&:reset_column_information)
+
+      tenant = { full_domain: 'test.dash.org' }.to_ostruct
       allow(StashEngine::Tenant).to receive(:find).with('ucop').and_return(tenant)
     end
 
@@ -51,12 +58,15 @@ describe StashDatacite do
 
       # everything but resources since it's a mega hash and easier to see errors when only small bits are compared instead of mega hash
       expect_hash.keys.reject! { |i| i == 'resources' }.each do |key|
-        expect(hash[key].to_json).to eq(expect_hash[key].to_json)
+        expect(hash[key].to_json).to eq(expect_hash[key].to_json),
+                                     "expected #{key} to eq #{expect_hash[key].to_json}, got #{hash[key].to_json}"
       end
 
       expect_hash['resources'].each_with_index do |expect_resource, idx|
         expect_resource.keys.each do |key|
-          expect(hash['resources'][idx][key].to_json).to eq(expect_resource[key].to_json)
+          expect(hash['resources'][idx][key].to_json).to eq(expect_resource[key].to_json),
+                                                         "expected #{idx}:#{key} to eq #{expect_resource[key].to_json}, " \
+                                                          " got #{hash['resources'][idx][key].to_json}"
         end
       end
     end

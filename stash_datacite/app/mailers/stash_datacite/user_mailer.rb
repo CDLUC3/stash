@@ -19,6 +19,7 @@ module StashDatacite
 
     def to_address_from(email_address)
       return email_address unless email_address.is_a?(Array)
+
       email_address.join(',')
     end
   end

@@ -95,6 +95,7 @@ module StashDatacite
 
       def ensure_license(tenant)
         return unless @resource.rights.empty?
+
         license = StashEngine::License.by_id(tenant.default_license)
         @resource.rights.create(rights: license[:name], rights_uri: license[:uri])
       end
