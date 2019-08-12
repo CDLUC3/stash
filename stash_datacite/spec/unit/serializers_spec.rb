@@ -39,7 +39,7 @@ describe StashDatacite do
         ActiveRecord::Base.connection.execute(q)
       end
 
-      tenant = {full_domain: 'test.dash.org' }.to_ostruct
+      tenant = { full_domain: 'test.dash.org' }.to_ostruct
       allow(StashEngine::Tenant).to receive(:find).with('ucop').and_return(tenant)
     end
 
