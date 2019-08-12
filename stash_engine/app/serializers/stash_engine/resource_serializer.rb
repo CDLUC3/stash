@@ -5,6 +5,9 @@ module StashEngine
     REJECT_COLUMNS = %w[id user_id current_resource_state_id identifier_id current_editor_id].freeze
     COLUMNS = (StashEngine::Resource.column_names - REJECT_COLUMNS).freeze
 
+    TRANSFORM_HASH = { 'dataone' => 'dryad', 'ucpress' => 'dryad', 'ocdp' => 'uci'}.freeze
+    TRANSFORM_ITEMS = TRANSFORM_HASH.keys.freeze
+
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def hash
       # leaving out some things not used from DataCite schema: alternate identifiers, formats, languages, name
@@ -30,9 +33,21 @@ module StashEngine
         rights: @my_model.rights.map { |i| RightSerializer.new(i).hash },
         sizes: @my_model.sizes.map { |i| SizeSerializer.new(i).hash },
         subjects: @my_model.subjects.order(subject: :asc).map { |i| SubjectSerializer.new(i).hash }
-      )
+      ).merge(tenant_transform)
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+    def tenant_transform
+      if @my_model.identifier.nil?
+        # no identifier, so never submitted
+        return {} unless TRANSFORM_ITEMS.include?(@my_model.tenant_id)
+        { 'tenant_id' => TRANSFORM_HASH[@my_model.tenant_id] }
+      else
+        # submitted at least once
+        return {} unless @my_model.tenant_id == 'ocdp'
+        { 'tenant_id' => 'uci'}
+      end
+    end
 
   end
 end
