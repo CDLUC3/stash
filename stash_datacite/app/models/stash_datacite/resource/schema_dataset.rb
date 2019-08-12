@@ -43,16 +43,19 @@ module StashDatacite
       def to_item(value)
         return unless value
         return value unless value.class == Array
+
         value.length == 1 ? value.first : value
       end
 
       def names
         return [] if @resource.title.blank?
+
         [@resource.title]
       end
 
       def descriptions
         return [] unless @resource.descriptions
+
         @resource.descriptions.map(&:description).compact
       end
 
@@ -72,11 +75,13 @@ module StashDatacite
 
       def keywords
         return [] unless @resource.subjects
+
         @resource.subjects.map(&:subject).compact
       end
 
       def authors
         return [] unless @resource.authors
+
         @resource.authors.map do |i|
           { '@type' => 'Person', 'givenName' => i.author_first_name, 'familyName' => i.author_last_name }
         end
@@ -88,6 +93,7 @@ module StashDatacite
 
       def distribution
         return nil unless @resource.download_uri
+
         { '@type' => 'DataDownload', 'fileFormat' => 'application/zip', 'contentURL' => @resource.download_uri }
       end
 
@@ -139,6 +145,7 @@ module StashDatacite
 
       def license
         return [] unless @resource.rights
+
         @resource.rights.map do |right|
           { '@type' => 'CreativeWork',
             'name' => right.rights,
