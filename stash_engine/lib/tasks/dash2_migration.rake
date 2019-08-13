@@ -31,12 +31,17 @@ namespace :dash2_migration do
   desc 'Output file for identifiers'
   task output_ids: :environment do
     SKIP_IDENTIFIERS = [119, 123, 124, 137, 586, 601].freeze
+    TEST_TENANTS = %w[dataone ucop ucpress]
     ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
     out_array = []
     StashEngine::Identifier.joins(:resources).distinct.each_with_index do |my_ident, counter|
       puts "#{counter}  #{my_ident}"
       next if SKIP_IDENTIFIERS.include?(my_ident.id)
-      out_array.push(StashEngine::ResourceSerializer.new(my_ident).hash)
+
+      # the following is for testing in development, comment out for all
+      next unless TEST_TENANTS.include?(my_ident.resources.last.tenant_id)
+
+      out_array.push(StashEngine::StashIdentifierSerializer.new(my_ident).hash)
     end
     File.open('identifiers.json', 'w') do |f|
       f.write(out_array.to_json)
@@ -45,9 +50,14 @@ namespace :dash2_migration do
 
   desc 'Output file for resources without identifiers'
   task output_resources: :environment do
+    TEST_TENANTS = %w[dataone ucop ucpress]
+
     ActiveRecord::Base.establish_connection('production') # we only need to migrate from production env
     out_array = []
     StashEngine::Resource.where(identifier_id: nil).each_with_index do |my_res, counter|
+      # the following is for testing in development, comment out for all
+      # next unless TEST_TENANTS.include?(my_res.tenant_id)
+
       puts "#{counter + 1}  resource_id: #{my_res.id}"
       out_array.push(StashEngine::ResourceSerializer.new(my_res).hash)
     end
