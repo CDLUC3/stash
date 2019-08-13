@@ -39,7 +39,7 @@ namespace :dash2_migration do
       next if SKIP_IDENTIFIERS.include?(my_ident.id)
 
       # the following is for testing in development, comment out for all
-      next unless TEST_TENANTS.include?(my_ident.resources.last.tenant_id)
+      # next unless TEST_TENANTS.include?(my_ident.resources.last.tenant_id)
 
       out_array.push(StashEngine::StashIdentifierSerializer.new(my_ident).hash)
     end
